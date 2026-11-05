@@ -1,0 +1,9 @@
+esptool.py v4.12.0
+SHA digest in image updated
+Wrote 0x93db0 bytes to file /Users/zhuzhe/Workspace/grok-bot-esp32/release/grok-bot-stopwatch-merged.bin, ready to flash to offset 0x0
+{
+  "file": "grok-bot-stopwatch-merged.bin",
+  "offset": "0x0",
+  "size": 605616,
+  "sha256": "73d9ffc043a7e7650e29877b93acdaea96a143b8a4a3ace91dd0f23d2bb2e1ef"
+}

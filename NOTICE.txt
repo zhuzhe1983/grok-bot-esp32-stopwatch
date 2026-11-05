@@ -1,0 +1,11 @@
+This standalone demo extracts the procedural interaction renderer from the local
+esp-agent working tree at the user's request. Extraction hashes are recorded in
+docs/extraction.json. No license grant for the original project is changed here.
+
+Grok Bot is a visual reference. This project is not an official xAI product and
+does not include extracted xAI animation assets or the original player.
+
+M5Unified 0.2.29: Copyright M5Stack, MIT license.
+M5GFX 0.2.35: M5Stack / LovyanGFX and bundled contributors, see upstream notices.
+ESP-IDF 5.5.1: Espressif and bundled contributors, see SDK component licenses.
+Release copies of the managed-library notices are under release/licenses/.

@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-11-06T01:37:48.563314+08:00",
+  "native_tests": {
+    "passed": 2,
+    "failed": 0,
+    "sanitizers": [
+      "address",
+      "undefined"
+    ]
+  },
+  "firmware_build": "passed",
+  "target": "esp32s3",
+  "idf": "v5.5.1",
+  "geometry_regeneration": "byte-for-byte identical",
+  "preview": "preview/characters.png",
+  "preview_inspected": true,
+  "source_and_release_hashes": "verified",
+  "hardware_flashed": false,
+  "hardware_tested": false,
+  "merged_image": {
+    "file": "grok-bot-stopwatch-merged.bin",
+    "offset": "0x0",
+    "size": 605616,
+    "sha256": "73d9ffc043a7e7650e29877b93acdaea96a143b8a4a3ace91dd0f23d2bb2e1ef"
+  }
+}

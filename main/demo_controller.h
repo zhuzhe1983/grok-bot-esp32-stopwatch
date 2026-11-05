@@ -1,0 +1,30 @@
+#pragma once
+#include "agent_interaction.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef struct {
+    uint32_t now_ms;
+    bool next_character, next_color, recenter;
+    bool touching;
+    float touch_x, touch_y; /* Normalized screen coordinates, -1..1. */
+    bool acceleration_valid;
+    float ax, ay, az; /* Screen-aligned acceleration in g. */
+} demo_input_t;
+
+typedef struct {
+    ea_interaction_t face;
+    uint32_t rng, last_ms, next_expression_ms, last_imu_ms;
+    uint8_t bag[EA_FACE_COUNT], bag_index, calibration_samples;
+    float filtered_x, filtered_y, filtered_z;
+    float neutral_x, neutral_y, sum_x, sum_y, sum_z;
+    bool imu_enabled, imu_ready, have_acceleration;
+} demo_controller_t;
+
+void demo_init(demo_controller_t *demo, uint32_t now_ms, uint32_t seed, bool imu);
+void demo_update(demo_controller_t *demo, const demo_input_t *input);
+const char *demo_expression_name(ea_interaction_state_t state);
+#ifdef __cplusplus
+}
+#endif

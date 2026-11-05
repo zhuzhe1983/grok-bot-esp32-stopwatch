@@ -1,0 +1,13 @@
+{
+  "source_project": "esp-agent",
+  "source_head": "fdb706fe3e5e7266594a19a3616e59ec2dc757bf",
+  "source_state": "uncommitted working-tree implementation",
+  "files_sha256": {
+    "firmware/components/agent_interaction/agent_interaction.c": "05d81ede3c5a6255311ae22d04b2cfa5761cc6593d9fce932f2516f4c4ee268a",
+    "firmware/components/agent_interaction/interaction_projection.h": "6a10820b3c2c2b29dc689675d7ff1a190704fe5036a220a3b89f0a7e52ac942b",
+    "firmware/components/agent_interaction/interaction_shapes.h": "263f9dd27029b69d1d8aec14a2318e976b166f1c288602ef05c1c4ad49c696d0",
+    "firmware/components/agent_interaction/interaction_surface_data.h": "2ae653263d54ee501af869b1b1f415dd42de97d4bc5a4d1fc846605db7815fc2",
+    "firmware/components/agent_interaction/include/agent_interaction.h": "6c4353e17d87de925148b0bbba35723b405c8d4e18ced5281bddffd1ff9d783c",
+    "firmware/components/agent_core/include/agent_interaction_config.h": "b4ca8cb65a6409b324ef5505d40628a55caab4a4baf9e3e6177588f14f98c0c3"
+  }
+}

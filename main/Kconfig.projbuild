@@ -1,0 +1,9 @@
+menu "Grok Bot StopWatch demo"
+config GROK_DEMO_IMU
+    bool "Use the built-in IMU for head orientation"
+    default y
+config GROK_DEMO_BRIGHTNESS
+    int "AMOLED brightness (0-255)"
+    range 1 255
+    default 100
+endmenu

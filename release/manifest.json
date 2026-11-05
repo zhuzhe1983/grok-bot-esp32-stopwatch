@@ -1,0 +1,44 @@
+{
+  "project": "grok-bot-esp32",
+  "version": "0.1.0",
+  "board": "M5Stack StopWatch C152",
+  "chip": "esp32s3",
+  "flash_size": 16777216,
+  "idf_version": "v5.5.1",
+  "merged_image": {
+    "file": "grok-bot-stopwatch-merged.bin",
+    "offset": "0x0",
+    "size": 605616,
+    "sha256": "73d9ffc043a7e7650e29877b93acdaea96a143b8a4a3ace91dd0f23d2bb2e1ef"
+  },
+  "parts": [
+    {
+      "offset": "0x0",
+      "file": "bootloader.bin",
+      "size": 22336,
+      "sha256": "4452be105cd49c270bce35cf85e74e2a9e5a9ef2b4743708f66483adeb20a715"
+    },
+    {
+      "offset": "0x8000",
+      "file": "partition-table.bin",
+      "size": 3072,
+      "sha256": "fd8026bff850ca0dee41c41305160317fffe604dda30a9bd5a701ac82d96fa17"
+    },
+    {
+      "offset": "0x10000",
+      "file": "grok_bot_stopwatch.bin",
+      "size": 540080,
+      "sha256": "104565b31baa2dec812eb7abd23ebc7d8e24ce0b1516f34ac989c3d5f846b3a5"
+    }
+  ],
+  "flashed": false,
+  "hardware_verified": false,
+  "controls": {
+    "left": "next shape",
+    "right": "next color",
+    "touch": "pointer position",
+    "tilt": "head orientation when not touching",
+    "both_hold_1s": "recenter IMU"
+  },
+  "note": "Merged image replaces the bootloader, partition table and application; intended for this standalone demo."
+}

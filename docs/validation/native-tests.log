@@ -1,0 +1,31 @@
+-- The C compiler identification is AppleClang 21.0.0.21000401
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Configuring done (0.3s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Users/zhuzhe/Workspace/grok-bot-esp32/build-native
+[ 22%] Building C object CMakeFiles/face.dir/Users/zhuzhe/Workspace/grok-bot-esp32/components/agent_interaction/agent_interaction.c.o
+[ 22%] Building C object CMakeFiles/face.dir/Users/zhuzhe/Workspace/grok-bot-esp32/main/demo_controller.c.o
+[ 33%] Linking C static library libface.a
+[ 33%] Built target face
+[ 55%] Building C object CMakeFiles/test_controller.dir/test_controller.c.o
+[ 55%] Building C object CMakeFiles/render_preview.dir/render_preview.c.o
+[ 66%] Building C object CMakeFiles/test_interaction.dir/test_interaction.c.o
+[ 88%] Linking C executable test_controller
+[ 88%] Linking C executable render_preview
+[100%] Linking C executable test_interaction
+[100%] Built target render_preview
+[100%] Built target test_controller
+[100%] Built target test_interaction
+Test project /Users/zhuzhe/Workspace/grok-bot-esp32/build-native
+    Start 1: interaction
+1/2 Test #1: interaction ......................   Passed    1.56 sec
+    Start 2: controller
+2/2 Test #2: controller .......................   Passed    0.29 sec
+
+100% tests passed out of 2
+
+Total Test time (real) =   1.85 sec
