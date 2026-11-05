@@ -1,0 +1,52 @@
+Start testing: Nov 06 03:10 CST
+----------------------------------------------------------
+1/3 Testing: interaction
+1/3 Test: interaction
+Command: "/Users/zhuzhe/Workspace/grok-bot-esp32/build-native/test_interaction" "/Users/zhuzhe/Workspace/grok-bot-esp32/build-native"
+Directory: /Users/zhuzhe/Workspace/grok-bot-esp32/build-native
+"interaction" start time: Nov 06 03:10 CST
+Output:
+----------------------------------------------------------
+renderer=832 bytes, RGB565 canvas=131072 bytes, desktop mean=1.300 ms/frame
+shape/state bounds, off/hidden/e-paper inactivity, PCM integrity passed
+<end of output>
+Test time =   1.29 sec
+----------------------------------------------------------
+Test Passed.
+"interaction" end time: Nov 06 03:10 CST
+"interaction" time elapsed: 00:00:01
+----------------------------------------------------------
+
+2/3 Testing: controller
+2/3 Test: controller
+Command: "/Users/zhuzhe/Workspace/grok-bot-esp32/build-native/test_controller" "/Users/zhuzhe/Workspace/grok-bot-esp32/build-native"
+Directory: /Users/zhuzhe/Workspace/grok-bot-esp32/build-native
+"controller" start time: Nov 06 03:10 CST
+Output:
+----------------------------------------------------------
+controller: buttons, full random cycles, touch priority, filtered tilt, recenter, IMU dropout, timer wrap passed
+<end of output>
+Test time =   0.36 sec
+----------------------------------------------------------
+Test Passed.
+"controller" end time: Nov 06 03:10 CST
+"controller" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/3 Testing: raster
+3/3 Test: raster
+Command: "/Users/zhuzhe/Workspace/grok-bot-esp32/build-native/test_raster"
+Directory: /Users/zhuzhe/Workspace/grok-bot-esp32/build-native
+"raster" start time: Nov 06 03:10 CST
+Output:
+----------------------------------------------------------
+raster: 1248 full-resolution frames; packed pixels exact; reference total_diff=0 max_diff=0
+<end of output>
+Test time =   7.03 sec
+----------------------------------------------------------
+Test Passed.
+"raster" end time: Nov 06 03:10 CST
+"raster" time elapsed: 00:00:07
+----------------------------------------------------------
+
+End testing: Nov 06 03:10 CST

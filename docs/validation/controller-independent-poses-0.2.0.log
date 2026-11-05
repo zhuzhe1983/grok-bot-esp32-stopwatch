@@ -1,0 +1,5 @@
+[ 66%] Built target face
+[ 83%] Building C object CMakeFiles/test_controller.dir/test_controller.c.o
+[100%] Linking C executable test_controller
+[100%] Built target test_controller
+controller: buttons, full random cycles, touch priority, filtered tilt, recenter, IMU dropout, timer wrap passed

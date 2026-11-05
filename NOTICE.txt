@@ -9,3 +9,6 @@ M5Unified 0.2.29: Copyright M5Stack, MIT license.
 M5GFX 0.2.35: M5Stack / LovyanGFX and bundled contributors, see upstream notices.
 ESP-IDF 5.5.1: Espressif and bundled contributors, see SDK component licenses.
 Release copies of the managed-library notices are under release/licenses/.
+
+Special thanks to https://grokbot.yin.wiki/index.html for the interaction and
+visual reference, and https://x.ai/bot for the Grok Bot design inspiration.

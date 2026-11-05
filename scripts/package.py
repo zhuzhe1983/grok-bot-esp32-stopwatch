@@ -63,8 +63,9 @@ manifest={'project':'grok-bot-esp32','version':description['project_version'],'b
           'merged_image':{'file':merged.name,'offset':'0x0','size':len(image),
                           'sha256':hashlib.sha256(image).hexdigest()},
           'parts':parts,'flashed':False,'hardware_verified':False,
-          'controls':{'left':'next shape','right':'next color','touch':'pointer position',
+          'controls':{'left':'next shape (320 ms single-click delay)','left_double':'calibrate neutral IMU pose; hold still briefly','right':'next color','touch':'pointer position',
                       'tilt':'head orientation when not touching','both_hold_1s':'recenter IMU'},
+          'credits':[{'name':'Grok Bot web reference','url':'https://grokbot.yin.wiki/index.html'},{'name':'xAI Grok Bot visual inspiration','url':'https://x.ai/bot'}],
           'note':'Merged image replaces the bootloader, partition table and application; intended for this standalone demo.'}
 (OUT/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(manifest['merged_image'],indent=2))

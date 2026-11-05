@@ -1,0 +1,189 @@
+{
+  "checked_at": "2026-11-06T03:14:18.503009+08:00",
+  "version": "0.2.0",
+  "model": "white TriviaPOD TP-01-A (user identified)",
+  "chip": "ESP32-S3 rev0.2",
+  "flash_bytes": 33554432,
+  "psram_bytes": 8388608,
+  "image": {
+    "file": "grok-bot-stopwatch-merged.bin",
+    "offset": "0x0",
+    "size": 646944,
+    "sha256": "77f6f668b4b6f368479c2ddaa162cbca0ec5051636d54ce8969cf080f0d6fea1"
+  },
+  "full_backup": "32 MiB original backup verified against device; private and excluded from Git",
+  "flash": "passed",
+  "readback": "all 646944 bytes exactly matched final release",
+  "boot": "automatic hard_reset after write; no physical power-button action required",
+  "observation_seconds": 75,
+  "panic_or_reboot_observed": false,
+  "imu": "real BMI270 initialized and stable neutral calibration completed",
+  "fps_samples": [
+    {
+      "uptime_ms": 6096,
+      "shape": 6,
+      "color": 0,
+      "expression": "HAPPY",
+      "imu_ready": 1,
+      "frames_5s": 115,
+      "fps": 22.9,
+      "render_us": 6872,
+      "flush_us": 33685
+    },
+    {
+      "uptime_ms": 11137,
+      "shape": 6,
+      "color": 0,
+      "expression": "SPEAK",
+      "imu_ready": 1,
+      "frames_5s": 145,
+      "fps": 29.0,
+      "render_us": 5609,
+      "flush_us": 26005
+    },
+    {
+      "uptime_ms": 16163,
+      "shape": 6,
+      "color": 0,
+      "expression": "IDLE",
+      "imu_ready": 1,
+      "frames_5s": 150,
+      "fps": 29.8,
+      "render_us": 5278,
+      "flush_us": 24561
+    },
+    {
+      "uptime_ms": 21133,
+      "shape": 6,
+      "color": 0,
+      "expression": "LOVE",
+      "imu_ready": 1,
+      "frames_5s": 150,
+      "fps": 30.0,
+      "render_us": 5485,
+      "flush_us": 24420
+    },
+    {
+      "uptime_ms": 26181,
+      "shape": 6,
+      "color": 0,
+      "expression": "ERROR",
+      "imu_ready": 1,
+      "frames_5s": 152,
+      "fps": 30.3,
+      "render_us": 5511,
+      "flush_us": 24302
+    },
+    {
+      "uptime_ms": 31187,
+      "shape": 6,
+      "color": 0,
+      "expression": "ASK",
+      "imu_ready": 1,
+      "frames_5s": 150,
+      "fps": 30.0,
+      "render_us": 5520,
+      "flush_us": 24428
+    },
+    {
+      "uptime_ms": 36165,
+      "shape": 6,
+      "color": 0,
+      "expression": "WINK",
+      "imu_ready": 1,
+      "frames_5s": 145,
+      "fps": 28.9,
+      "render_us": 5756,
+      "flush_us": 25418
+    },
+    {
+      "uptime_ms": 41225,
+      "shape": 6,
+      "color": 0,
+      "expression": "SURPRISE",
+      "imu_ready": 1,
+      "frames_5s": 144,
+      "fps": 28.6,
+      "render_us": 5785,
+      "flush_us": 26074
+    },
+    {
+      "uptime_ms": 46220,
+      "shape": 6,
+      "color": 0,
+      "expression": "SLEEP",
+      "imu_ready": 1,
+      "frames_5s": 149,
+      "fps": 29.8,
+      "render_us": 5302,
+      "flush_us": 23854
+    },
+    {
+      "uptime_ms": 51220,
+      "shape": 6,
+      "color": 0,
+      "expression": "WINK",
+      "imu_ready": 1,
+      "frames_5s": 150,
+      "fps": 29.8,
+      "render_us": 5087,
+      "flush_us": 23780
+    },
+    {
+      "uptime_ms": 56284,
+      "shape": 6,
+      "color": 0,
+      "expression": "ASK",
+      "imu_ready": 1,
+      "frames_5s": 147,
+      "fps": 29.2,
+      "render_us": 5878,
+      "flush_us": 25457
+    },
+    {
+      "uptime_ms": 61257,
+      "shape": 6,
+      "color": 0,
+      "expression": "DONE",
+      "imu_ready": 1,
+      "frames_5s": 147,
+      "fps": 29.4,
+      "render_us": 5476,
+      "flush_us": 24727
+    },
+    {
+      "uptime_ms": 66310,
+      "shape": 6,
+      "color": 0,
+      "expression": "THINK",
+      "imu_ready": 1,
+      "frames_5s": 141,
+      "fps": 28.1,
+      "render_us": 5924,
+      "flush_us": 26784
+    },
+    {
+      "uptime_ms": 71297,
+      "shape": 6,
+      "color": 0,
+      "expression": "ERROR",
+      "imu_ready": 1,
+      "frames_5s": 143,
+      "fps": 28.5,
+      "render_us": 5656,
+      "flush_us": 25919
+    }
+  ],
+  "steady_fps_min": 28.1,
+  "steady_fps_max": 30.3,
+  "scope": "default teardrop shape, randomized expressions; initial HUD excluded from steady FPS",
+  "unverified": [
+    "new firmware visual acceptance by user",
+    "physical tilt direction",
+    "physical double-click feel",
+    "StopWatch C152 physical hardware",
+    "other shapes physical FPS",
+    "power consumption"
+  ],
+  "steady_fps_median": 29.4
+}

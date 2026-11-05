@@ -55,8 +55,70 @@ static void millis_wrap(void) {
     in.now_ms=start+3000; demo_update(&d,&in); assert(d.face.state!=EA_FACE_IDLE);
     assert(isfinite(d.face.time) && d.face.time>0);
 }
+static void click_gestures(void) {
+    demo_buttons_t b={0};demo_input_t in={0};
+    demo_buttons_update(&b,10,true,false,&in);
+    demo_buttons_update(&b,80,false,false,&in);assert(!in.next_character);
+    demo_buttons_update(&b,180,true,false,&in);
+    demo_buttons_update(&b,240,false,false,&in);assert(in.recenter && !in.next_character);
+    demo_buttons_update(&b,700,false,false,&in);assert(!in.recenter && !in.next_character);
+    demo_buttons_update(&b,800,true,false,&in);
+    demo_buttons_update(&b,880,false,false,&in);
+    demo_buttons_update(&b,1201,false,false,&in);assert(in.next_character && !in.recenter);
+    demo_buttons_update(&b,1300,false,true,&in);
+    demo_buttons_update(&b,1380,false,false,&in);assert(in.next_color);
+    demo_buttons_update(&b,1500,true,true,&in);
+    demo_buttons_update(&b,2500,true,true,&in);assert(in.recenter);
+    demo_buttons_update(&b,2600,false,true,&in);assert(!in.next_character && !in.next_color && !in.recenter);
+    demo_buttons_update(&b,2700,false,false,&in);assert(!in.next_character && !in.next_color);
+    demo_buttons_update(&b,3200,false,false,&in);assert(!in.next_character);
+    b=(demo_buttons_t){0};
+    demo_buttons_update(&b,UINT32_MAX-200,true,false,&in);
+    demo_buttons_update(&b,UINT32_MAX-100,false,false,&in);
+    demo_buttons_update(&b,50,true,false,&in);
+    demo_buttons_update(&b,100,false,false,&in);assert(in.recenter && !in.next_character);
+}
+static void three_dimensional_neutral(void) {
+    const float poses[][3]={{0,0,1},{0,1,0},{0,-1,0},{1,0,0},{-1,0,0},{0,0,-1},{.3f,.4f,.8660254f}};
+    /* Independent expected tangent directions for these physical poses.
+       Do not derive stimulus from the controller's computed basis. */
+    const float tangents[][2][3]={
+        {{1,0,0},{0,1,0}},{{1,0,0},{0,0,-1}},{{1,0,0},{0,0,1}},
+        {{0,0,-1},{0,1,0}},{{0,0,1},{0,1,0}},{{1,0,0},{0,-1,0}},
+        {{.9517691f,-.0643078f,-.3f},{-.0643078f,.9142563f,-.4f}}
+    };
+    for(unsigned pose=0;pose<sizeof(poses)/sizeof(poses[0]);pose++) {
+        demo_controller_t d;demo_init(&d,0,42,true);
+        demo_input_t in={.acceleration_valid=true,.ax=poses[pose][0],.ay=poses[pose][1],.az=poses[pose][2]};
+        for(int i=0;i<40;i++){in.now_ms+=10;demo_update(&d,&in);}
+        assert(d.imu_ready && fabsf(d.face.input_x)<.001f && fabsf(d.face.input_y)<.001f);
+        for(int axis=0;axis<2;axis++)for(int sign=-1;sign<=1;sign+=2) {
+            const float *basis=tangents[pose][axis];
+            in.ax=poses[pose][0]*.9396926f+basis[0]*.3420201f*sign;
+            in.ay=poses[pose][1]*.9396926f+basis[1]*.3420201f*sign;
+            in.az=poses[pose][2]*.9396926f+basis[2]*.3420201f*sign;
+            for(int i=0;i<100;i++){in.now_ms+=10;demo_update(&d,&in);}
+            float primary=axis?d.face.input_y:d.face.input_x,other=axis?d.face.input_x:d.face.input_y;
+            assert(primary*sign>.53f && primary*sign<.59f && fabsf(other)<.01f);
+        }
+        in.recenter=true;in.now_ms+=10;demo_update(&d,&in);in.recenter=false;
+        for(int i=0;i<40;i++){in.now_ms+=10;demo_update(&d,&in);}
+        assert(d.imu_ready && fabsf(d.face.input_x)<.01f && fabsf(d.face.input_y)<.01f);
+    }
+    demo_controller_t d;demo_init(&d,0,42,true);
+    demo_input_t in={.acceleration_valid=true,.az=.98f};
+    for(int i=0;i<100;i++){in.now_ms+=10;in.ax=(i&1)?.2f:-.2f;demo_update(&d,&in);}
+    assert(!d.imu_ready); // Moving samples must not become the new level pose.
+    in.ax=0;in.az=1;
+    for(int i=0;i<40;i++){in.now_ms+=10;demo_update(&d,&in);}
+    assert(d.imu_ready);
+    demo_init(&d,0,42,true);in=(demo_input_t){.acceleration_valid=true,.az=1};
+    for(int i=0;i<400;i++){in.now_ms+=1;demo_update(&d,&in);}
+    assert(d.imu_ready); // A fast sensor must not wrap the stable-sample count.
+}
 int main(void) {
     buttons_and_bag(); tilt_touch_and_dropout(); millis_wrap();
+    click_gestures();three_dimensional_neutral();
     puts("controller: buttons, full random cycles, touch priority, filtered tilt, recenter, IMU dropout, timer wrap passed");
     return 0;
 }

@@ -15,6 +15,7 @@ static void rest_pose(ea_interaction_state_t state,float *yaw,float *pitch) {
 }
 #include "interaction_shapes.h"
 #include "interaction_surface_data.h"
+#include "interaction_mesh_topology.h"
 static void targets(ea_interaction_t *u) {
     for (int i=0;i<N;i++) u->target[i] = shape_radii[u->config.character][i];
 }
@@ -85,13 +86,31 @@ static void span(painter_t *p,int x1,int x2,int y,uint32_t c) {
     p->span(p->ctx,x1<0?0:x1,x2>=p->size?p->size-1:x2,y,c);
 }
 static void polygon(painter_t *p,const float *x,const float *y,int n,uint32_t c) {
-    float low=y[0],high=y[0];
-    for(int i=1;i<n;i++){low=fminf(low,y[i]);high=fmaxf(high,y[i]);}
-    int first=(int)fmaxf(0,ceilf(low)),last=(int)fminf(p->size-1,floorf(high));
+    /* Only intersect edges crossing the current row. The old scan examined
+       every edge on every row (including the 128-edge circular outline).
+       Keep the original intersection expression and half-open edge rule. */
+    typedef struct {float x,y,dx,dy;int first,last;} edge_t;
+    edge_t edges[N*2];int used=0,last=-1;
+    for(int i=0,j=n-1;i<n;j=i++) {
+        if(y[i]==y[j])continue;
+        int first=(int)fmaxf(0,ceilf(fminf(y[i],y[j])));
+        int end=(int)fminf(p->size-1,ceilf(fmaxf(y[i],y[j]))-1);
+        if(first>end)continue;
+        edge_t e={x[i],y[i],x[j]-x[i],y[j]-y[i],first,end};
+        int k=used++;while(k>0 && edges[k-1].first>first){edges[k]=edges[k-1];--k;}edges[k]=e;
+        if(end>last)last=end;
+    }
+    if(!used)return;
+    int active[N*2],active_count=0,next=0;
+    int first=edges[0].first;
     for(int row=first;row<=last;row++) {
         float hits[N*2]; int count=0;
-        for(int i=0,j=n-1;i<n;j=i++) if ((y[i]>row)!=(y[j]>row)) {
-            float hit=x[i]+(row-y[i])*(x[j]-x[i])/(y[j]-y[i]);
+        while(next<used && edges[next].first<=row)active[active_count++]=next++;
+        for(int i=0;i<active_count;) {
+            const edge_t *e=&edges[active[i]];
+            if(e->last<row){active[i]=active[--active_count];continue;}
+            ++i;
+            float hit=e->x+(row-e->y)*e->dx/e->dy;
             int k=count++; while(k>0 && hits[k-1]>hit){hits[k]=hits[k-1];k--;} hits[k]=hit;
         }
         for(int i=0;i+1<count;i+=2) span(p,(int)ceilf(hits[i]),(int)floorf(hits[i+1]),row,c);
@@ -247,10 +266,13 @@ int eai_project_surface_eye(unsigned character,ea_interaction_state_t state,int 
                     float yaw,float pitch,float x[EAI_EYE_CAPACITY],float y[EAI_EYE_CAPACITY]) {
     return project_surface_eye(character,NULL,state,eye,blink,yaw,pitch,x,y);
 }
-static void solid_triangle(painter_t *p,point3_t a,point3_t b,point3_t c,uint32_t color) {
+static void solid_triangle(painter_t *p,point3_t a,point3_t b,point3_t c,int side,uint32_t color) {
+    /* Closed solid: back-facing triangles cannot add visible coverage. Both
+       halves retain their own winding, including the concave star/flower. */
+    if(((b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x))*side<=0)return;
     float x[]={a.x,b.x,c.x},y[]={a.y,b.y,c.y};polygon(p,x,y,3,color);
 }
-static void solid_body(painter_t *p,const ea_interaction_t *u,rotation_t q,float r,float sx,float sy,
+static void solid_body_fallback(painter_t *p,const ea_interaction_t *u,rotation_t q,float r,float sx,float sy,
                        float ca,float sa,float cx,float cy,uint32_t color) {
     point3_t previous[N],current[N];
     for(int side=-1;side<=1;side+=2)for(int ring=0;ring<9;ring++) {
@@ -262,11 +284,68 @@ static void solid_body(painter_t *p,const ea_interaction_t *u,rotation_t q,float
         }
         if(ring)for(int i=0;i<N;i++) {
             int j=(i+1)%N;
-            solid_triangle(p,previous[i],current[i],current[j],color);
-            if(ring>1)solid_triangle(p,previous[i],current[j],previous[j],color);
+            solid_triangle(p,previous[i],current[i],current[j],side,color);
+            if(ring>1)solid_triangle(p,previous[i],current[j],previous[j],side,color);
         }
         memcpy(previous,current,sizeof(previous));
     }
+}
+typedef struct {float x,y,dx,dy;int first,last,winding;} silhouette_edge_t;
+static void silhouette_fill(painter_t *p,silhouette_edge_t *edges,int used,int last,uint32_t color) {
+    int active[256],active_count=0,next=0;
+    for(int row=edges[0].first;row<=last;row++) {
+        struct {float x;int winding;} hits[256];int count=0;
+        while(next<used && edges[next].first<=row)active[active_count++]=next++;
+        for(int i=0;i<active_count;) {
+            const silhouette_edge_t *e=&edges[active[i]];
+            if(e->last<row){active[i]=active[--active_count];continue;}
+            ++i;float hit=e->x+(row-e->y)*e->dx/e->dy;
+            int k=count++;while(k>0 && hits[k-1].x>hit){hits[k]=hits[k-1];--k;}
+            hits[k].x=hit;hits[k].winding=e->winding;
+        }
+        int winding=0;float start=0;
+        for(int i=0;i<count;i++) {
+            int before=winding;winding+=hits[i].winding;
+            if(!before && winding)start=hits[i].x;
+            else if(before && !winding)span(p,(int)ceilf(start),(int)floorf(hits[i].x),row,color);
+        }
+    }
+}
+static void solid_body(painter_t *p,const ea_interaction_t *u,rotation_t q,float r,float sx,float sy,
+                       float ca,float sa,float cx,float cy,uint32_t color) {
+    /* A uniformly colored closed mesh only needs its silhouette. Interior
+       shared edges cancel; nonzero winding keeps overlapping concave contours
+       filled. The geometry and the decal triangles are unchanged. */
+    struct {float x,y;} points[MESH_VERTICES];
+    uint8_t front[MESH_FACES];
+    silhouette_edge_t edges[256];int used=0,last=-1;
+    for(int i=0;i<MESH_VERTICES;i++) {
+        unsigned ring=mesh_vertices[i].ring,k=mesh_vertices[i].angle;
+        float rad=u->shape[k]*surface_rings[ring];
+        point3_t v=rotate_surface((point3_t){rad*surface_directions[k][0],rad*surface_directions[k][1],mesh_vertices[i].side*surface_depths[u->config.character][ring][k]/16384.f},q);
+        float x=v.x*r*sx,y=v.y*r*sy;
+        points[i].x=cx+x*ca-y*sa;points[i].y=cy+x*sa+y*ca;
+    }
+    for(int i=0;i<MESH_FACES;i++) {
+        const uint16_t *f=mesh_faces[i];
+        float ax=points[f[0]].x,ay=points[f[0]].y;
+        front[i]=(points[f[1]].x-ax)*(points[f[2]].y-ay)-(points[f[1]].y-ay)*(points[f[2]].x-ax)>0;
+    }
+    for(int i=0;i<MESH_EDGES;i++) {
+        const uint16_t *e=mesh_edges[i];
+        if(front[e[2]]==front[e[3]])continue;
+        unsigned a=front[e[2]]?e[0]:e[1],b=front[e[2]]?e[1]:e[0];
+        float ax=points[a].x,ay=points[a].y,bx=points[b].x,by=points[b].y;
+        if(ay==by)continue;
+        int first=(int)fmaxf(0,ceilf(fminf(ay,by)));
+        int end=(int)fminf(p->size-1,ceilf(fmaxf(ay,by))-1);
+        if(first>end)continue;
+        if(used==256) {solid_body_fallback(p,u,q,r,sx,sy,ca,sa,cx,cy,color);return;}
+        silhouette_edge_t edge={ax,ay,bx-ax,by-ay,first,end,by>ay?1:-1};
+        int k=used++;while(k>0 && edges[k-1].first>first){edges[k]=edges[k-1];--k;}edges[k]=edge;
+        if(end>last)last=end;
+    }
+    if(used)silhouette_fill(p,edges,used,last,color);
 }
 void ea_interaction_render(const ea_interaction_t *u,int size,uint32_t bg,ea_interaction_span_t fn,void *ctx) {
     if (!u || !fn || !u->config.enabled || !u->visible || size<16 || size>1024) return;

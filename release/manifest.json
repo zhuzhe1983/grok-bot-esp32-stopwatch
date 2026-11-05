@@ -1,6 +1,6 @@
 {
   "project": "grok-bot-esp32",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "board": "M5Stack StopWatch C152",
   "chip": "esp32s3",
   "flash_size": 16777216,
@@ -8,15 +8,15 @@
   "merged_image": {
     "file": "grok-bot-stopwatch-merged.bin",
     "offset": "0x0",
-    "size": 605728,
-    "sha256": "290371fdcfd683f01ec3f6355b97298b44e8d80b53a3f2053114ce29e63c28b6"
+    "size": 646944,
+    "sha256": "77f6f668b4b6f368479c2ddaa162cbca0ec5051636d54ce8969cf080f0d6fea1"
   },
   "parts": [
     {
       "offset": "0x0",
       "file": "bootloader.bin",
       "size": 22336,
-      "sha256": "4452be105cd49c270bce35cf85e74e2a9e5a9ef2b4743708f66483adeb20a715"
+      "sha256": "536e8e310fe41473efa0f8a15114c74dc1807f5f446bdd2e4cf14c4443e718a8"
     },
     {
       "offset": "0x8000",
@@ -27,19 +27,42 @@
     {
       "offset": "0x10000",
       "file": "grok_bot_stopwatch.bin",
-      "size": 540192,
-      "sha256": "9f6ab356091f85a6ea3935d6c95edb9a979234ad737672283b7adb51dd0de1cb"
+      "size": 581408,
+      "sha256": "604517399c8f2058b4f0e3e640098cc46b1ffb4a3170b74fdf03b4464ab82350"
     }
   ],
   "flashed": true,
-  "hardware_verified": false,
+  "hardware_verified": true,
   "controls": {
-    "left": "next shape",
+    "left": "next shape (320 ms single-click delay)",
+    "left_double": "calibrate neutral IMU pose; hold still briefly",
     "right": "next color",
     "touch": "pointer position",
     "tilt": "head orientation when not touching",
     "both_hold_1s": "recenter IMU"
   },
+  "credits": [
+    {
+      "name": "Grok Bot web reference",
+      "url": "https://grokbot.yin.wiki/index.html"
+    },
+    {
+      "name": "xAI Grok Bot visual inspiration",
+      "url": "https://x.ai/bot"
+    }
+  ],
   "note": "Merged image replaces the bootloader, partition table and application; intended for this standalone demo.",
-  "hardware_validation": "../docs/validation/hardware-0.1.1.json"
+  "hardware_verification": {
+    "model": "white TriviaPOD TP-01-A (user identified)",
+    "scope": "flash byte readback, boot, live IMU calibration, 75-second serial performance observation",
+    "record": "../docs/validation/hardware-0.2.0.json",
+    "limitations": [
+      "new firmware visual acceptance by user",
+      "physical tilt direction",
+      "physical double-click feel",
+      "StopWatch C152 physical hardware",
+      "other shapes physical FPS",
+      "power consumption"
+    ]
+  }
 }

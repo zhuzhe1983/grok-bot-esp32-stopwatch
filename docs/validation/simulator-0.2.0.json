@@ -1,0 +1,296 @@
+{
+  "checked_at": "2026-11-06T03:15:02.073749+08:00",
+  "version": "0.2.0",
+  "platform": "https://zhuzhe1983.github.io/esp-online-tester/platform/",
+  "board": "m5stack-stopwatch",
+  "execution": "actual merged firmware in esp32sim-wasm interpreter",
+  "image": {
+    "file": "grok-bot-stopwatch-merged.bin",
+    "offset": "0x0",
+    "size": 646944,
+    "sha256": "77f6f668b4b6f368479c2ddaa162cbca0ec5051636d54ce8969cf080f0d6fea1"
+  },
+  "boot_status": "running",
+  "capabilities": {
+    "version": "1.0.0",
+    "backend": "esp32sim-wasm",
+    "static": true,
+    "executable": true,
+    "execution": {
+      "mode": "wasm-interpreter",
+      "reason": "Official V0.5 IMU JIT non-response; interpreter verified."
+    },
+    "sdCard": {
+      "available": false,
+      "defaultBytes": 67108864,
+      "maxBytes": 134217728,
+      "formats": [
+        "fat32",
+        "raw-image"
+      ],
+      "scope": "product-board-canonical-flash-sha256",
+      "autoSaveIntervalMs": 1500,
+      "crashSafe": false
+    },
+    "network": {
+      "available": true,
+      "transport": "browser-softap+ethernet-websocket",
+      "helperRequired": false,
+      "externalConnectionRequired": true,
+      "modes": [
+        "public-relay",
+        "local-helper"
+      ],
+      "portMappingRequiresHelper": true,
+      "softAp": true,
+      "automaticProvisioning": [
+        "xiaozhi-web"
+      ],
+      "methods": [
+        "configureNetwork",
+        "readNetwork",
+        "connectNetwork",
+        "mapNetworkPort",
+        "unmapNetworkPort",
+        "requestNetworkHttp",
+        "provisionNetwork",
+        "addNetworkService"
+      ]
+    },
+    "audio": {
+      "input": {
+        "available": true,
+        "mode": "logical-i2s-port",
+        "sampleRates": [
+          8000,
+          96000
+        ],
+        "ports": [
+          0,
+          1
+        ]
+      },
+      "output": {
+        "available": true,
+        "channels": 1,
+        "format": "s16le"
+      },
+      "methods": [
+        "audioConfigure",
+        "pushAudio",
+        "readAudio"
+      ]
+    },
+    "lifecycle": [
+      "configure",
+      "loadFirmware",
+      "start",
+      "pause",
+      "reset",
+      "dispose"
+    ],
+    "deviceStorage": {
+      "available": true,
+      "backend": "indexeddb",
+      "persistent": true,
+      "scope": "product-board-chip-canonical-flash-sha256",
+      "autoSaveIntervalMs": 500,
+      "crashSafe": false
+    },
+    "firmware": {
+      "manifest": true,
+      "mergedImage": true,
+      "localFile": true,
+      "localSegments": true,
+      "localBuild": true,
+      "sha256": true,
+      "maxFileBytes": 268435456,
+      "maxBundleBytes": 268435456,
+      "corsRequired": true
+    },
+    "input": {
+      "accessories": [],
+      "encoders": [],
+      "buttons": [
+        "button-a",
+        "button-b"
+      ],
+      "touch": true,
+      "keyboard": null,
+      "serialPorts": [
+        "usb",
+        "uart0",
+        "uart1"
+      ]
+    },
+    "servos": {
+      "available": false,
+      "axes": [],
+      "source": "guest-uart-feedback",
+      "unit": "degrees",
+      "hardwareValidated": false
+    },
+    "motors": {
+      "available": false,
+      "axes": [],
+      "source": "guest-routed-pwm",
+      "unit": "normalized-duty",
+      "rpmAvailable": false,
+      "flightSimulated": false,
+      "hardwareValidated": false
+    },
+    "flight": {
+      "available": false,
+      "enabled": false,
+      "model": "stampfly-rigid-body-v1",
+      "calibrated": false,
+      "source": "guest-pwm-rigid-body",
+      "methods": [
+        "configureFlight",
+        "readFlight"
+      ],
+      "recording": false,
+      "shares": "configuration-only",
+      "worldFrame": "NED",
+      "bodyFrame": "FRD"
+    },
+    "hardwareDiagnostics": {
+      "available": true,
+      "source": "guest-registers",
+      "hardwareValidated": false
+    },
+    "framebuffer": {
+      "available": true,
+      "formats": [
+        "rgba",
+        "png"
+      ],
+      "source": "emulator"
+    },
+    "gps": {
+      "available": true,
+      "mode": "logical-uart1-nmea",
+      "physicalRouting": false,
+      "baudTiming": false,
+      "hardwareValidated": false
+    },
+    "lora": {
+      "available": false,
+      "model": "sx1262-lora-digital",
+      "physicalRf": false,
+      "maxPayloadBytes": 255,
+      "methods": [
+        "readLoRa",
+        "receiveLoRa"
+      ],
+      "recording": false
+    },
+    "imu": {
+      "available": true,
+      "model": "bmi270-register-subset",
+      "sceneOrientation": true,
+      "orientation": "quaternion-xyzw",
+      "accelerationUnit": "g",
+      "angularVelocityUnit": "deg/s",
+      "maxSceneHz": 30,
+      "hardwareValidated": false,
+      "sampleTiming": "host-input",
+      "inputOwner": "host",
+      "physicalMountingVerified": false
+    },
+    "unsupported": [
+      "arbitrary-dynamic-peripheral-attachment",
+      "uart2-input",
+      "physical-gps-radio",
+      "arbitrary-firmware-compatibility",
+      "cycle-exact-host-input"
+    ]
+  },
+  "buttons": {
+    "single_a": "shape 6 -> 7",
+    "single_b": "color 0 -> 5",
+    "serial": "o heap allocator\r\nI (101) spi_flash: detected chip: generic\r\nI (101) spi_flash: flash io: qio\r\nI (101) sleep_gpio: Configure to isolate all GPIO pins in sleep state\r\nI (101) sleep_gpio: Enable automatic switching of GPIO sleep configuration\r\nI (101) main_task: Started on CPU0\r\nI (101) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations\r\nI (101) main_task: Calling app_main()\r\nI (116) M5GFX: [Autodetect] board_M5StopWatch\r\nI (520) grok_demo: StopWatch panel=468x468 viewport=466x466; 13 shapes, 11 colors, 12 expressions; IMU=on\r\nI (5520) grok_demo: shape=6 color=0 expression=ERROR imu_ready=0 frames_5s=148 fps=29.6 render_us=4475 flush_us=20041\r\nI (10520) grok_demo: shape=6 color=0 expression=DONE imu_ready=0 frames_5s=149 fps=29.8 render_us=4299 flush_us=20234\r\nI (15534) grok_demo: shape=6 color=0 expression=SURPRISE imu_ready=0 frames_5s=149 fps=29.7 render_us=4456 flush_us=20122\r\nI (20549) grok_demo: shape=6 color=0 expression=WINK imu_ready=0 frames_5s=152 fps=30.3 render_us=4560 flush_us=20565\r\nI (25550) grok_demo: shape=6 color=0 expression=SPEAK imu_ready=0 frames_5s=151 fps=30.2 render_us=4466 flush_us=20439\r\nI (30559) grok_demo: shape=6 color=0 expression=LISTEN imu_ready=1 frames_5s=150 fps=29.9 render_us=3813 flush_us=16453\r\nI (35560) grok_demo: shape=7 color=5 expression=ASK imu_ready=1 frames_5s=148 fps=29.6 render_us=3219 flush_us=13139\r\n"
+  },
+  "double_a": {
+    "serial": "I (37033) grok_demo: IMU neutral pose calibration requested (double A or hold A+B)\r\nI (40564) grok_demo: shape=7 color=5 expression=HAPPY imu_ready=1 frames_5s=152 fps=30.4 render_us=3682 flush_us=13862\r\n",
+    "imu": {
+      "enabled": true,
+      "source": "agent",
+      "quaternion": [
+        0,
+        0,
+        0.17364817766693036,
+        0.9848077530122081
+      ],
+      "accelG": [
+        0.34202014332566877,
+        0.9396926207859085,
+        0
+      ],
+      "gyroDps": [
+        0,
+        0,
+        0
+      ],
+      "delivery": "register-state",
+      "guestTime": 42.3695870625
+    }
+  },
+  "touch": {
+    "positions": [
+      [
+        95,
+        230
+      ],
+      [
+        370,
+        230
+      ]
+    ],
+    "released": true,
+    "visually_inspected": true,
+    "result": "head and surface-attached eyes follow left/right"
+  },
+  "screenshots": [
+    "stopwatch-frame-0.2.0.png",
+    "touch-left-0.2.0.png",
+    "touch-right-0.2.0.png",
+    "stopwatch-emulator-0.2.0.png"
+  ],
+  "hardware_diagnostics": {
+    "schemaVersion": 1,
+    "board": "stopwatch",
+    "state": {
+      "powerLedEnabled": true,
+      "downloadLocked": false,
+      "pm1ConfiguredHz": 100000,
+      "pm1LastBusHz": 102040,
+      "display": {
+        "sleepOut": true,
+        "displayOn": true,
+        "brightness": 100,
+        "brightnessControlEnabled": true,
+        "visible": true
+      }
+    },
+    "findings": [
+      {
+        "code": "PM1_I2C_CLOCK_MISMATCH",
+        "severity": "warning",
+        "count": 942,
+        "summary": "I2C clock exceeded the PM1 configuration",
+        "detail": "Observed 102040 Hz while PM1 register 0x09 allowed 100000 Hz. Use 100 kHz for initial communication and change both sides coherently. Real hardware may NACK; this observation does not inject a failure."
+      }
+    ],
+    "limits": [
+      "PM1 wake/sleep delays, retry tolerance and analog power are not simulated. A successful simulation does not verify real hardware startup.",
+      "I2C rates are nominal controller settings. GPIO bit-banged clock rates and electrical signal quality are not measured.",
+      "CO5300 sleep/display and explicitly zero brightness affect visible output; physical brightness curves and uncertain reset defaults are not modeled."
+    ]
+  },
+  "limitations": [
+    "Simulated time is not physical-device FPS.",
+    "BMI270 register model uses host-fed samples; physical mounting is unverified.",
+    "Physical double-click feel and tilt direction require user acceptance."
+  ]
+}
