@@ -5,3 +5,6 @@
 __pycache__/
 .DS_Store
 /preview/*.ppm
+/.playwright-cli/
+/output/playwright/
+/.private/

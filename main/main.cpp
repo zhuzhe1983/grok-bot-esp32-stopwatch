@@ -44,9 +44,14 @@ extern "C" void app_main(void) {
     M5.begin(config);
     M5.Display.setRotation(0);
     M5.Display.setBrightness(CONFIG_GROK_DEMO_BRIGHTNESS);
+    // M5GFX 0.2.35 exposes a 468x468 logical panel around the 466px visible circle.
+    // Keep the face viewport centered and use the same origin for touch input.
+    const int width=M5.Display.width(),height=M5.Display.height();
     if (M5.getBoard()!=m5::board_t::board_M5StopWatch ||
-        M5.Display.width()!=kSide || M5.Display.height()!=kSide)
+        width<kSide || width>468 || height<kSide || height>468)
         stop_with_message("M5StopWatch required");
+    const int origin_x=(width-kSide)/2,origin_y=(height-kSide)/2;
+    M5.Display.fillScreen(kBackground);
     frame.setPsram(true);
     frame.setColorDepth(16);
     if (!frame.createSprite(kSide,kSide)) stop_with_message("Display buffer unavailable");
@@ -55,7 +60,7 @@ extern "C" void app_main(void) {
     frame.setFont(&fonts::Font2);
     const bool imu=config.internal_imu && M5.Imu.isEnabled();
     demo_init(&demo,now_ms(),esp_random(),imu);
-    ESP_LOGI(kTag,"StopWatch 466x466; 13 shapes, 11 colors, 12 expressions; IMU=%s",imu?"on":"unavailable/disabled");
+    ESP_LOGI(kTag,"StopWatch panel=%dx%d viewport=466x466; 13 shapes, 11 colors, 12 expressions; IMU=%s",width,height,imu?"on":"unavailable/disabled");
     if (!imu) ESP_LOGW(kTag,"Touch remains available without IMU");
     uint32_t next_frame=now_ms(),hud_until=now_ms()+4000;
     uint32_t both_since=0,report_at=now_ms()+5000,frames=0;
@@ -78,8 +83,8 @@ extern "C" void app_main(void) {
         if (M5.Touch.getCount()) {
             auto touch=M5.Touch.getDetail();
             in.touching=touch.isPressed();
-            in.touch_x=2.f*touch.x/(kSide-1)-1.f;
-            in.touch_y=2.f*touch.y/(kSide-1)-1.f;
+            in.touch_x=2.f*(touch.x-origin_x)/(kSide-1)-1.f;
+            in.touch_y=2.f*(touch.y-origin_y)/(kSide-1)-1.f;
         }
         if (imu) {
             const auto fresh=M5.Imu.update();
@@ -99,7 +104,7 @@ extern "C" void app_main(void) {
                 frame.drawString(line,kSide/2,390);
                 frame.drawString(imu ? (demo.imu_ready?"TOUCH / TILT":"HOLD STILL: IMU ZERO") : "TOUCH TO LOOK",kSide/2,412);
             }
-            frame.pushSprite(0,0);
+            frame.pushSprite(origin_x,origin_y);
             ++frames;
             next_frame=in.now_ms+kFrameMs;
         }

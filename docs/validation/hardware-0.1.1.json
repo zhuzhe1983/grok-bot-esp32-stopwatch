@@ -1,0 +1,240 @@
+{
+  "checked_at": "2026-11-06T02:24:57.548670+08:00",
+  "version": "0.1.1",
+  "model": "white TriviaPOD TP-01-A (user identified)",
+  "chip": "ESP32-S3 rev0.2",
+  "flash_bytes": 33554432,
+  "psram_bytes": 8388608,
+  "image": {
+    "file": "grok-bot-stopwatch-merged.bin",
+    "offset": "0x0",
+    "size": 605728,
+    "sha256": "290371fdcfd683f01ec3f6355b97298b44e8d80b53a3f2053114ce29e63c28b6"
+  },
+  "full_backup": "32 MiB; device MD5 verified; private and excluded from Git",
+  "flash": "passed",
+  "readback": "605728 bytes exactly matched; padding FF; next sector unchanged",
+  "boot": "after user single-clicked physical power button",
+  "display": "user confirmed purple face visible",
+  "buttons": "actual shape/color changes observed in serial",
+  "imu": "initialized and calibrated; user later reported orientation inaccurate",
+  "fps_samples": [
+    [
+      "6208",
+      "7",
+      "0",
+      "SURPRISE",
+      "1",
+      "35"
+    ],
+    [
+      "11284",
+      "7",
+      "0",
+      "LOVE",
+      "1",
+      "39"
+    ],
+    [
+      "16371",
+      "7",
+      "6",
+      "ASK",
+      "1",
+      "38"
+    ],
+    [
+      "21399",
+      "8",
+      "6",
+      "SLEEP",
+      "1",
+      "42"
+    ],
+    [
+      "26536",
+      "9",
+      "6",
+      "IDLE",
+      "1",
+      "43"
+    ],
+    [
+      "31557",
+      "10",
+      "8",
+      "LISTEN",
+      "1",
+      "36"
+    ],
+    [
+      "36576",
+      "11",
+      "9",
+      "WINK",
+      "1",
+      "36"
+    ],
+    [
+      "41584",
+      "12",
+      "3",
+      "THINK",
+      "1",
+      "36"
+    ],
+    [
+      "46563",
+      "0",
+      "3",
+      "SPEAK",
+      "1",
+      "78"
+    ],
+    [
+      "51601",
+      "0",
+      "3",
+      "ERROR",
+      "1",
+      "79"
+    ],
+    [
+      "56632",
+      "0",
+      "3",
+      "SPEAK",
+      "1",
+      "79"
+    ],
+    [
+      "61677",
+      "0",
+      "3",
+      "DONE",
+      "1",
+      "80"
+    ],
+    [
+      "66704",
+      "0",
+      "3",
+      "WINK",
+      "1",
+      "80"
+    ],
+    [
+      "71741",
+      "0",
+      "3",
+      "LISTEN",
+      "1",
+      "79"
+    ],
+    [
+      "76788",
+      "0",
+      "3",
+      "LOVE",
+      "1",
+      "80"
+    ],
+    [
+      "81837",
+      "0",
+      "3",
+      "SLEEP",
+      "1",
+      "82"
+    ],
+    [
+      "86899",
+      "0",
+      "3",
+      "ASK",
+      "1",
+      "81"
+    ],
+    [
+      "91916",
+      "0",
+      "3",
+      "IDLE",
+      "1",
+      "79"
+    ],
+    [
+      "96966",
+      "0",
+      "3",
+      "HAPPY",
+      "1",
+      "81"
+    ],
+    [
+      "102004",
+      "0",
+      "3",
+      "SURPRISE",
+      "1",
+      "80"
+    ],
+    [
+      "107061",
+      "0",
+      "3",
+      "SPEAK",
+      "1",
+      "79"
+    ],
+    [
+      "112107",
+      "0",
+      "3",
+      "ERROR",
+      "1",
+      "79"
+    ],
+    [
+      "117144",
+      "0",
+      "3",
+      "SURPRISE",
+      "1",
+      "79"
+    ],
+    [
+      "122179",
+      "0",
+      "3",
+      "IDLE",
+      "1",
+      "79"
+    ],
+    [
+      "127200",
+      "0",
+      "3",
+      "LISTEN",
+      "1",
+      "79"
+    ],
+    [
+      "132257",
+      "0",
+      "3",
+      "DONE",
+      "1",
+      "80"
+    ]
+  ],
+  "unverified": [
+    "touch direction",
+    "IMU physical directions",
+    "power consumption"
+  ],
+  "regressions": [
+    "complex shapes only 7–8 FPS; circle approximately 16 FPS",
+    "IMU neutral-angle subtraction problematic when upright"
+  ]
+}

@@ -22,5 +22,7 @@
     "offset": "0x0",
     "size": 605616,
     "sha256": "73d9ffc043a7e7650e29877b93acdaea96a143b8a4a3ace91dd0f23d2bb2e1ef"
-  }
+  },
+  "version": "0.1.0",
+  "note": "Historical native/build evidence for initial release; see simulator-0.1.1.json for the current simulator run."
 }

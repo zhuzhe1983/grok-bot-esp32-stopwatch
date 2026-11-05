@@ -58,7 +58,7 @@ for component in (ROOT/'managed_components').iterdir():
         if path.is_file() and path.name.lower().startswith(('license','copying','ofl')):
             name=str(path.relative_to(ROOT/'managed_components')).replace('/','__')
             shutil.copy2(path,notices/name)
-manifest={'project':'grok-bot-esp32','version':'0.1.0','board':'M5Stack StopWatch C152',
+manifest={'project':'grok-bot-esp32','version':description['project_version'],'board':'M5Stack StopWatch C152',
           'chip':'esp32s3','flash_size':16777216,'idf_version':description['git_revision'],
           'merged_image':{'file':merged.name,'offset':'0x0','size':len(image),
                           'sha256':hashlib.sha256(image).hexdigest()},

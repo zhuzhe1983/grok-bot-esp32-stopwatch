@@ -1,0 +1,113 @@
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x23 (DOWNLOAD(USB/UART0))
+Saved PC:0x4037815d
+waiting for download
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x23 (DOWNLOAD(USB/UART0))
+Saved PC:0x40041a76
+waiting for download
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x2b (SPI_FAST_FLASH_BOOT)
+Saved PC:0x420091a4
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x1700
+load:0x403c8700,len:0xe1c
+load:0x403cb700,len:0x31cc
+entry 0x403c8938
+I (24) boot: ESP-IDF v5.5.1 2nd stage bootloader
+I (24) boot: compile time Nov  6 2026 01:29:40
+I (25) boot: Multicore bootloader
+I (25) boot: chip revision: v0.2
+I (25) boot: efuse block revision: v1.4
+I (25) qio_mode: Enabling default flash chip QIO
+I (25) boot.esp32s3: Boot SPI Speed : 80MHz
+I (26) boot.esp32s3: SPI Mode       : QIO
+I (26) boot.esp32s3: SPI Flash Size : 16MB
+I (26) boot: Enabling RNG early entropy source...
+I (26) boot: Partition Table:
+I (26) boot: ## Label            Usage          Type ST Offset   Length
+I (27) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (27) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (27) boot:  2 factory          factory app      00 00 00010000 00400000
+I (28) boot: End of partition table
+I (28) esp_image: segment 0: paddr=00010020 vaddr=3c060020 size=1ad64h (109924) map
+I (45) esp_image: segment 1: paddr=0002ad8c vaddr=3fc95f00 size=03350h ( 13136) load
+I (48) esp_image: segment 2: paddr=0002e0e4 vaddr=40374000 size=01f34h (  7988) load
+I (50) esp_image: segment 3: paddr=00030020 vaddr=42000020 size=53ee8h (343784) map
+I (101) esp_image: segment 4: paddr=00083f10 vaddr=40375f34 size=0fec0h ( 65216) load
+I (114) esp_image: segment 5: paddr=00093dd8 vaddr=50000000 size=00020h (    32) load
+I (121) boot: Loaded app from partition at offset 0x10000
+I (121) boot: Disabling RNG early entropy source...
+I (122) octal_psram: vendor id    : 0x0d (AP)
+I (122) octal_psram: dev id       : 0x02 (generation 3)
+I (122) octal_psram: density      : 0x03 (64 Mbit)
+I (123) octal_psram: good-die     : 0x01 (Pass)
+I (123) octal_psram: Latency      : 0x01 (Fixed)
+I (123) octal_psram: VCC          : 0x01 (3V)
+I (123) octal_psram: SRF          : 0x01 (Fast Refresh)
+I (123) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+I (124) octal_psram: BurstLen     : 0x01 (32 Byte)
+I (124) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+I (124) octal_psram: DriveStrength: 0x00 (1/1)
+I (125) MSPI Timing: PSRAM timing tuning index: 4
+I (125) esp_psram: Found 8MB PSRAM device
+I (125) esp_psram: Speed: 80MHz
+I (126) cpu_start: Multicore app
+I (532) esp_psram: SPI SRAM memory test OK
+I (541) cpu_start: Pro cpu start user code
+I (541) cpu_start: cpu freq: 240000000 Hz
+I (541) app_init: Application information:
+I (541) app_init: Project name:     grok_bot_stopwatch
+I (541) app_init: App version:      0.1.1
+I (541) app_init: Compile time:     Nov  6 2026 01:57:19
+I (541) app_init: ELF file SHA256:  d752dab24...
+I (542) app_init: ESP-IDF:          v5.5.1
+I (542) efuse_init: Min chip rev:     v0.0
+I (542) efuse_init: Max chip rev:     v0.99 
+I (542) efuse_init: Chip rev:         v0.2
+I (542) heap_init: Initializing. RAM available for dynamic allocation:
+I (543) heap_init: At 3FC9ADB8 len 0004E958 (314 KiB): RAM
+I (543) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (543) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+I (543) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM
+I (543) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator
+I (544) spi_flash: detected chip: gd
+I (544) spi_flash: flash io: qio
+W (544) spi_flash: Detected size(32768k) larger than the size in the binary image header(16384k). Using the size in the binary image header.
+I (545) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (545) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (546) main_task: Started on CPU0
+I (547) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (547) main_task: Calling app_main()
+I (565) M5GFX: [Autodetect] board_M5StopWatch
+I (1069) grok_demo: StopWatch panel=468x468 viewport=466x466; 13 shapes, 11 colors, 12 expressions; IMU=on
+I (6208) grok_demo: shape=7 color=0 expression=SURPRISE imu_ready=1 frames_5s=35
+I (11284) grok_demo: shape=7 color=0 expression=LOVE imu_ready=1 frames_5s=39
+I (16371) grok_demo: shape=7 color=6 expression=ASK imu_ready=1 frames_5s=38
+I (21399) grok_demo: shape=8 color=6 expression=SLEEP imu_ready=1 frames_5s=42
+I (26536) grok_demo: shape=9 color=6 expression=IDLE imu_ready=1 frames_5s=43
+I (31557) grok_demo: shape=10 color=8 expression=LISTEN imu_ready=1 frames_5s=36
+I (36576) grok_demo: shape=11 color=9 expression=WINK imu_ready=1 frames_5s=36
+I (41584) grok_demo: shape=12 color=3 expression=THINK imu_ready=1 frames_5s=36
+I (46563) grok_demo: shape=0 color=3 expression=SPEAK imu_ready=1 frames_5s=78
+I (51601) grok_demo: shape=0 color=3 expression=ERROR imu_ready=1 frames_5s=79
+I (56632) grok_demo: shape=0 color=3 expression=SPEAK imu_ready=1 frames_5s=79
+I (61677) grok_demo: shape=0 color=3 expression=DONE imu_ready=1 frames_5s=80
+I (66704) grok_demo: shape=0 color=3 expression=WINK imu_ready=1 frames_5s=80
+I (71741) grok_demo: shape=0 color=3 expression=LISTEN imu_ready=1 frames_5s=79
+I (76788) grok_demo: shape=0 color=3 expression=LOVE imu_ready=1 frames_5s=80
+I (81837) grok_demo: shape=0 color=3 expression=SLEEP imu_ready=1 frames_5s=82
+I (86899) grok_demo: shape=0 color=3 expression=ASK imu_ready=1 frames_5s=81
+I (91916) grok_demo: shape=0 color=3 expression=IDLE imu_ready=1 frames_5s=79
+I (96966) grok_demo: shape=0 color=3 expression=HAPPY imu_ready=1 frames_5s=81
+I (102004) grok_demo: shape=0 color=3 expression=SURPRISE imu_ready=1 frames_5s=80
+I (107061) grok_demo: shape=0 color=3 expression=SPEAK imu_ready=1 frames_5s=79
+I (112107) grok_demo: shape=0 color=3 expression=ERROR imu_ready=1 frames_5s=79
+I (117144) grok_demo: shape=0 color=3 expression=SURPRISE imu_ready=1 frames_5s=79
+I (122179) grok_demo: shape=0 color=3 expression=IDLE imu_ready=1 frames_5s=79
+I (127200) grok_demo: shape=0 color=3 expression=LISTEN imu_ready=1 frames_5s=79
+I (132257) grok_demo: shape=0 color=3 expression=DONE imu_ready=1 frames_5s=80
