@@ -1,0 +1,91 @@
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x2b (SPI_FAST_FLASH_BOOT)
+Saved PC:0x40378eb1
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x1700
+load:0x403c8700,len:0xe1c
+load:0x403cb700,len:0x31cc
+entry 0x403c8938
+I (24) boot: ESP-IDF v5.5.1 2nd stage bootloader
+I (24) boot: compile time Nov  6 2026 02:52:24
+I (25) boot: Multicore bootloader
+I (25) boot: chip revision: v0.2
+I (25) boot: efuse block revision: v1.4
+I (25) qio_mode: Enabling default flash chip QIO
+I (25) boot.esp32s3: Boot SPI Speed : 80MHz
+I (26) boot.esp32s3: SPI Mode       : QIO
+I (26) boot.esp32s3: SPI Flash Size : 16MB
+I (26) boot: Enabling RNG early entropy source...
+I (26) boot: Partition Table:
+I (26) boot: ## Label            Usage          Type ST Offset   Length
+I (27) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (27) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (28) boot:  2 factory          factory app      00 00 00010000 00400000
+I (28) boot: End of partition table
+I (28) esp_image: segment 0: paddr=00010020 vaddr=3c060020 size=24124h (147748) map
+I (51) esp_image: segment 1: paddr=0003414c vaddr=3fc95f00 size=03350h ( 13136) load
+I (54) esp_image: segment 2: paddr=000374a4 vaddr=40374000 size=08b74h ( 35700) load
+I (61) esp_image: segment 3: paddr=00040020 vaddr=42000020 size=54ef8h (347896) map
+I (113) esp_image: segment 4: paddr=00094f20 vaddr=4037cb74 size=09280h ( 37504) load
+I (120) esp_image: segment 5: paddr=0009e1a8 vaddr=50000000 size=00020h (    32) load
+I (128) boot: Loaded app from partition at offset 0x10000
+I (128) boot: Disabling RNG early entropy source...
+I (129) octal_psram: vendor id    : 0x0d (AP)
+I (129) octal_psram: dev id       : 0x02 (generation 3)
+I (129) octal_psram: density      : 0x03 (64 Mbit)
+I (129) octal_psram: good-die     : 0x01 (Pass)
+I (129) octal_psram: Latency      : 0x01 (Fixed)
+I (130) octal_psram: VCC          : 0x01 (3V)
+I (130) octal_psram: SRF          : 0x01 (Fast Refresh)
+I (130) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+I (130) octal_psram: BurstLen     : 0x01 (32 Byte)
+I (130) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+I (131) octal_psram: DriveStrength: 0x00 (1/1)
+I (131) MSPI Timing: PSRAM timing tuning index: 4
+I (132) esp_psram: Found 8MB PSRAM device
+I (132) esp_psram: Speed: 80MHz
+I (132) cpu_start: Multicore app
+I (539) esp_psram: SPI SRAM memory test OK
+I (547) cpu_start: Pro cpu start user code
+I (547) cpu_start: cpu freq: 240000000 Hz
+I (547) app_init: Application information:
+I (548) app_init: Project name:     grok_bot_stopwatch
+I (548) app_init: App version:      0.3.0
+I (548) app_init: Compile time:     Nov  6 2026 10:21:09
+I (548) app_init: ELF file SHA256:  ad760ee45...
+I (548) app_init: ESP-IDF:          v5.5.1
+I (548) efuse_init: Min chip rev:     v0.0
+I (548) efuse_init: Max chip rev:     v0.99 
+I (549) efuse_init: Chip rev:         v0.2
+I (549) heap_init: Initializing. RAM available for dynamic allocation:
+I (549) heap_init: At 3FC9AE48 len 0004E8C8 (314 KiB): RAM
+I (549) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (549) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+I (549) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM
+I (550) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator
+I (550) spi_flash: detected chip: gd
+I (550) spi_flash: flash io: qio
+W (550) spi_flash: Detected size(32768k) larger than the size in the binary image header(16384k). Using the size in the binary image header.
+I (551) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (552) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (552) main_task: Started on CPU0
+I (553) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (553) main_task: Calling app_main()
+I (573) M5GFX: [Autodetect] board_M5StopWatch
+I (1068) grok_demo: StopWatch panel=468x468 viewport=466x466; 13 shapes, 11 colors, 12 expressions; IMU=on
+I (6128) grok_demo: shape=6 color=0 expression=ERROR imu_ready=1 gyro=1 frames_5s=114 fps=22.7 render_us=7019 flush_us=34380 look=(0.00,0.00)
+I (11140) grok_demo: shape=6 color=0 expression=LISTEN imu_ready=1 gyro=1 frames_5s=150 fps=29.9 render_us=5023 flush_us=25326 look=(0.00,-0.00)
+I (16169) grok_demo: shape=6 color=0 expression=SURPRISE imu_ready=1 gyro=1 frames_5s=148 fps=29.4 render_us=5728 flush_us=25264 look=(-0.00,0.00)
+I (21199) grok_demo: shape=6 color=0 expression=IDLE imu_ready=1 gyro=1 frames_5s=148 fps=29.4 render_us=5736 flush_us=25264 look=(0.00,0.00)
+I (26223) grok_demo: shape=6 color=0 expression=SPEAK imu_ready=1 gyro=1 frames_5s=150 fps=29.9 render_us=5431 flush_us=25288 look=(0.00,-0.00)
+I (31234) grok_demo: shape=6 color=0 expression=DONE imu_ready=1 gyro=1 frames_5s=149 fps=29.7 render_us=5484 flush_us=25328 look=(0.00,-0.00)
+I (36271) grok_demo: shape=6 color=0 expression=THINK imu_ready=1 gyro=1 frames_5s=147 fps=29.2 render_us=5430 flush_us=26095 look=(0.00,-0.00)
+I (41275) grok_demo: shape=6 color=0 expression=ASK imu_ready=1 gyro=1 frames_5s=135 fps=27.0 render_us=6171 flush_us=28115 look=(0.00,0.00)
+I (46279) grok_demo: shape=6 color=0 expression=DONE imu_ready=1 gyro=1 frames_5s=151 fps=30.2 render_us=5186 flush_us=25432 look=(0.00,-0.00)
+I (51287) grok_demo: shape=6 color=0 expression=ERROR imu_ready=1 gyro=1 frames_5s=150 fps=30.0 render_us=5255 flush_us=25386 look=(0.00,-0.00)
+I (56313) grok_demo: shape=6 color=0 expression=SLEEP imu_ready=1 gyro=1 frames_5s=150 fps=29.8 render_us=5079 flush_us=25327 look=(0.00,-0.00)
+I (61319) grok_demo: shape=6 color=0 expression=SPEAK imu_ready=1 gyro=1 frames_5s=148 fps=29.6 render_us=5531 flush_us=25285 look=(0.00,-0.00)
+I (66326) grok_demo: shape=6 color=0 expression=HAPPY imu_ready=1 gyro=1 frames_5s=151 fps=30.2 render_us=5231 flush_us=25331 look=(0.00,-0.00)
+I (71337) grok_demo: shape=6 color=0 expression=LISTEN imu_ready=1 gyro=1 frames_5s=150 fps=29.9 render_us=5322 flush_us=25382 look=(0.00,-0.00)

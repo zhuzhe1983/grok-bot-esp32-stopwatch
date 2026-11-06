@@ -73,8 +73,18 @@ heart = bezier((0, -.62), [
 drop = bezier((0, -1.38), [((.28, -1.38), (.47, -1.04), (.80, -.60)), ((.93, -.43), (1, -.22), (1, 0)), ((1, .5523), (.5523, 1), (0, 1)), ((-.5523, 1), (-1, .5523), (-1, 0)), ((-1, -.22), (-.93, -.43), (-.80, -.60)), ((-.47, -1.04), (-.28, -1.38), (0, -1.38))])
 drop = [(x*1.03, y) for x, y in drop]
 square = rounded([(-.85, -.85), (.85, -.85), (.85, .85), (-.85, .85)], .20)
-triangle = rounded([(0, -1.10), (1.02, .76), (-1.02, .76)], .22)
-triangle = [(x*math.cos(math.pi/2+.42)-y*math.sin(math.pi/2+.42), x*math.sin(math.pi/2+.42)+y*math.cos(math.pi/2+.42)) for x, y in triangle]
+# Upright solid of revolution: a rounded apex and a softly domed base.
+# Its horizontal sections are circles, not a shallow extruded triangle.
+triangle = bezier((0, -1.10), [
+    ((.10, -1.10), (.16, -.98), (.22, -.84)),
+    ((.46, -.40), (.77, .16), (.94, .48)),
+    ((.99, .57), (.99, .70), (.86, .77)),
+    ((.64, .90), (.32, .93), (0, .93)),
+    ((-.32, .93), (-.64, .90), (-.86, .77)),
+    ((-.99, .70), (-.99, .57), (-.94, .48)),
+    ((-.77, .16), (-.46, -.40), (-.22, -.84)),
+    ((-.16, -.98), (-.10, -1.10), (0, -1.10)),
+])
 house = rounded([(0, -1.06), (.82, -.48), (.82, .87), (-.82, .87), (-.82, -.48)], .18)
 hexagon = rounded([(math.cos(TAU*i/6)*1.04, math.sin(TAU*i/6)*1.04) for i in range(6)], .18)
 
@@ -87,7 +97,7 @@ def shape(index, angle):
     if index in (2, 5, 6, 8, 9, 11):
         return radial({2: square, 5: heart, 6: drop, 8: triangle, 9: house, 11: hexagon}[index], angle)
     if index == 3:
-        return .80+.26*math.cos(4*angle)
+        return .88+.18*math.cos(4*angle)
     if index == 4:
         return circles([(-.34, -.34, .62), (.34, -.34, .62), (.34, .34, .62), (-.34, .34, .62)], angle)
     if index == 7:
@@ -102,18 +112,11 @@ def shape(index, angle):
 
 
 catalog = [[round(shape(index, -math.pi+TAU*i/64), 5) for i in range(64)] for index in range(13)]
-# Face scale, anchor x/y, and eye-roll offset (in body-radius units/radians).
-# Measured against the user's selection screenshot. A shared centre/scale makes
-# eyes escape the narrow arms of stars and the crown of the triangle.
-faces = [
-    [1.000, .000, .000, -.171], [1.012, -.172, -.030, -.034],
-    [.881, -.306, .190, -.038], [.773, -.217, .054, -.040],
-    [.907, -.296, .065, -.039], [.863, -.108, -.027, .021],
-    [1.000, .000, .000, -.005], [.995, -.131, .013, -.017],
-    [.740, -.065, .154, -.490], [.846, -.306, .208, -.028],
-    [.819, -.265, .191, -.027], [1.030, -.362, .225, -.045],
-    [.868, -.284, .198, -.040],
-]
+# Runtime faces are upright and centered in object space. The WebUI applies
+# the selection thumbnail's camera/roll separately; it is not a model transform.
+faces = [[scale, 0, 0, 0] for scale in
+         [1.000, 1.012, .881, .773, .907, .863, 1.000, .995,
+          .820, .846, .819, 1.030, .868]]
 # A single small smoothing pass removes C0 circle seams without changing identity.
 for index in (1, 4, 7, 12):
     values = catalog[index]
@@ -122,14 +125,29 @@ for index in (1, 4, 7, 12):
 # Rounded extrusion: depth and inward bevel width. Large bevels form inflated
 # bodies; small bevels leave a genuinely planar front, unlike a shared sphere.
 surfaces = [[1, 1], [.62, .65], [.34, .25], [.38, .32], [.54, .56],
-            [.68, .72], [.88, 1.05], [.73, .73], [.32, .16], [.36, .27],
+            [.68, .72], [.88, 1.05], [.73, .73], [1, 1], [.36, .27],
             [.32, .26], [.40, .30], [.42, .40]]
 rings = [0, .2, .4, .6, .75, .86, .94, .985, 1]
 directions = [(math.cos(-math.pi+TAU*i/64), math.sin(-math.pi+TAU*i/64)) for i in range(64)]
 contours = [[(r*x, r*y) for r, (x, y) in zip(row, directions)] for row in catalog]
 
 
+def cone_radius(y):
+    hits = []
+    points = contours[8]
+    for (ax, ay), (bx, by) in zip(points, points[1:]+points[:1]):
+        if abs(by-ay) > 1e-9 and min(ay, by) <= y <= max(ay, by):
+            hits.append(abs(ax+(bx-ax)*(y-ay)/(by-ay)))
+    return max(hits, default=0)
+
+
+cone_min = min(y for x, y in contours[8])
+cone_max = max(y for x, y in contours[8])
+cone_profile = [round(cone_radius(cone_min+(cone_max-cone_min)*i/64), 7) for i in range(65)]
+
 def height(index, x, y):
+    if index == 8:
+        return math.sqrt(max(0, cone_radius(y)**2-x*x))
     distance = float('inf')
     for (ax, ay), (bx, by) in zip(contours[index], contours[index][1:]+contours[index][:1]):
         dx, dy = bx-ax, by-ay
@@ -140,23 +158,8 @@ def height(index, x, y):
     return depth*math.sqrt(max(0, 1-t*t))
 
 
-# Preserve the calibrated resting face position while changing its surface.
-# Solve the front-surface anchor in object space, then keep it fixed there.
-surface_faces = []
-cy, sy, cp, sp = math.cos(.58), math.sin(.58), math.cos(.28), math.sin(.28)
-for index, (scale, ax, ay, roll) in enumerate(faces):
-    cr, sr = math.cos(roll), math.sin(roll)
-    target_x = ax+scale*(sy*cp*cr+sp*sr)
-    target_y = ay+scale*(sy*cp*sr-sp*cr)
-    x, y = ax, ay
-    for _ in range(40):
-        z = height(index, x, y)
-        y = .5*y+.5*(target_y+z*sp)/cp
-        x = .5*x+.5*(target_x-(y*sp+z*cp)*sy)/cy
-    surface_faces.append([round(scale, 5), round(x, 5), round(y, 5), roll])
-# A triangle's front is narrower near its upper edge. Keep even surprised eyes
-# on the central face instead of carrying the old spherical anchor to its rim.
-surface_faces[8][1:3] = [-.04, .02]
+# All decals share the runtime model coordinates, including its neutral pose.
+surface_faces = [list(face) for face in faces]
 depths = [[[round(height(index, r*x, r*y)*16384) if r < 1 else 0
             for x, y in contours[index]] for r in rings] for index in range(13)]
 header = "/* Generated by scripts/generate-interaction-shapes.py; original geometry. */\nstatic const float shape_radii[13][64] = {\n"
@@ -164,6 +167,8 @@ header += ",\n".join("    {" + ",".join(f"{v:.5f}f" for v in row) + "}" for row 
 header += "\n};\n"
 (ROOT / "components/agent_interaction/interaction_surface_data.h").write_text(
     "/* Generated shape-specific rounded solids. Depths are Q14. */\n"+
+    f"static const float cone_min_y = {cone_min:.7f}f, cone_max_y = {cone_max:.7f}f;\n"+
+    "static const float cone_profile[65] = {"+",".join(f"{v:.7f}f" for v in cone_profile)+"};\n"+
     "static const float surface_profiles[13][2] = {\n"+
     ",\n".join("{"+",".join(f"{v:.5f}f" for v in row)+"}" for row in surfaces)+"\n};\n"+
     "static const float surface_faces[13][4] = {\n"+

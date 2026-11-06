@@ -1,0 +1,22 @@
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Users/zhuzhe/Workspace/grok-bot-esp32/build-native
+[ 35%] Built target reference_renderer
+[ 42%] Built target face
+[ 71%] Building C object CMakeFiles/test_interaction.dir/test_interaction.c.o
+[ 92%] Built target test_raster
+[ 92%] Built target render_preview
+[ 92%] Built target test_controller
+[100%] Linking C executable test_interaction
+[100%] Built target test_interaction
+Test project /Users/zhuzhe/Workspace/grok-bot-esp32/build-native
+    Start 1: interaction
+1/3 Test #1: interaction ......................   Passed    1.52 sec
+    Start 2: controller
+2/3 Test #2: controller .......................   Passed    0.05 sec
+    Start 3: raster
+3/3 Test #3: raster ...........................   Passed    8.30 sec
+
+100% tests passed out of 3
+
+Total Test time (real) =   9.86 sec

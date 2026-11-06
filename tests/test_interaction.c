@@ -76,6 +76,31 @@ static float body_center_x(void) {
     }
     assert(right>=left);return (left+right)/2.f;
 }
+static void upright_rigid_pose(void) {
+    for(unsigned shape=0;shape<EA_INTERACTION_SHAPES;shape++) {
+        ea_interaction_config_t c=ea_interaction_default();c.enabled=true;c.character=shape;
+        ea_interaction_t f;ea_interaction_init(&f,&c,false);
+        assert(f.gaze_x==0 && f.gaze_y==0);
+        int reference_w=0,reference_h=0;
+        for(unsigned state=0;state<EA_FACE_COUNT;state++) {
+            ea_interaction_set_state(&f,state);f.level=1;
+            ea_interaction_render(&f,256,0x1e1e20,span,NULL);
+            int left=256,right=-1,top=256,bottom=-1;
+            /* Status dots are below the body; eye holes cannot affect its bounds. */
+            for(int y=0;y<222;y++)for(int x=0;x<256;x++)if(pixels[y*256+x]==0x915bfc) {
+                if(x<left)left=x;if(x>right)right=x;
+                if(y<top)top=y;if(y>bottom)bottom=y;
+            }
+            if(!state){reference_w=right-left;reference_h=bottom-top;}
+            assert(abs(right-left-reference_w)<=1 && abs(bottom-top-reference_h)<=1);
+        }
+    }
+    /* A cone's far eye wraps away before the near eye; a flat triangle would
+       compress both decals equally and would not satisfy this check. */
+    assert(fabsf(solid_eye_area(8,1,0,0)-solid_eye_area(8,0,0,0))<.0001f);
+    assert(solid_eye_area(8,0,1.25f,0)>solid_eye_area(8,1,1.25f,0)*3);
+    assert(solid_eye_area(8,1,1.7f,0)==0);
+}
 static void head_follows_input(void) {
     ea_interaction_config_t c=ea_interaction_default();c.enabled=true;c.character=0;
     float centers[2];
@@ -99,6 +124,7 @@ int main(int argc,char **argv){
     ea_interaction_init(&ui,&c,false);before=ui;ea_interaction_step(&ui,1);ea_interaction_render(&ui,256,0x1e1e20,span,NULL);
     assert(!calls && !memcmp(&ui,&before,sizeof(ui)) && !ea_interaction_animated(&ui));
     head_follows_input();
+    upright_rigid_pose();
     c.enabled=true;assert(ea_interaction_configure(&ui,&c));assert(ea_interaction_animated(&ui));
     ea_interaction_level(&ui,.5f);assert(!ui.look_active);
     ea_interaction_look(&ui,0,0,true);
@@ -106,7 +132,7 @@ int main(int argc,char **argv){
     assert(fabsf(ui.gaze_x)<.001f && fabsf(ui.gaze_y)<.001f);
     ea_interaction_look(&ui,0,0,false);
     for(int i=0;i<100;i++)ea_interaction_step(&ui,1.f/60);
-    assert(ui.gaze_x>.4f && ui.gaze_y>.15f);
+    assert(fabsf(ui.gaze_x)<.11f && fabsf(ui.gaze_y)<.07f);
     for(unsigned theme=0;theme<2;theme++)for(unsigned shape=0;shape<13;shape++){
         c.theme=theme;c.character=shape;c.color=shape%EA_INTERACTION_COLORS;assert(ea_interaction_configure(&ui,&c));
         ea_interaction_input(&ui,.6f,.8f,-.2f);

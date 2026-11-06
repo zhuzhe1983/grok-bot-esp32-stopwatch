@@ -1,0 +1,36 @@
+{
+  "version": "0.3.0",
+  "board": "white TriviaPOD TP-01-A",
+  "mac": "C4:9E:7E:13:EF:40",
+  "flash_bytes": 33554432,
+  "psram_bytes": 8388608,
+  "merged_sha256": "0b207ba2d2ba11907bb4a3bc58fb6cd2ecc0a8f0db8e847ac50969fded0d720a",
+  "readback_exact": true,
+  "boot_monitor_seconds": 75,
+  "gyro_and_accel_calibrated": true,
+  "default_shape": 6,
+  "steady_fps": {
+    "min": 27.0,
+    "max": 30.2,
+    "median": 29.8,
+    "samples": [
+      29.9,
+      29.4,
+      29.4,
+      29.9,
+      29.7,
+      29.2,
+      27.0,
+      30.2,
+      30.0,
+      29.8,
+      29.6,
+      30.2,
+      29.9
+    ]
+  },
+  "limitations": [
+    "Physical IMU axis direction and subjective appearance await user observation.",
+    "Performance measured for default teardrop only; no physical StopWatch C152 tested."
+  ]
+}

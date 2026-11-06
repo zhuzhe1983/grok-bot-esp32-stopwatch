@@ -3,8 +3,8 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
-/* Frozen 0.1.1 renderer: differential coverage protects concave silhouettes,
-   eye occlusion, blink and animated shape transitions during optimization. */
+/* Independent, unoptimized triangle rasterizer with the current pose/decal
+   contract: protects silhouettes, eye occlusion and shape transitions. */
 void reference_render(const ea_interaction_t *,int,uint32_t,ea_interaction_span_t,void *);
 enum {SIDE=466,STRIDE=(SIDE+7)/8};
 static unsigned char expected[SIDE*SIDE],actual[SIDE*SIDE],packed[SIDE*STRIDE];

@@ -1,6 +1,6 @@
 {
   "project": "grok-bot-esp32",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "board": "M5Stack StopWatch C152",
   "chip": "esp32s3",
   "flash_size": 16777216,
@@ -8,8 +8,8 @@
   "merged_image": {
     "file": "grok-bot-stopwatch-merged.bin",
     "offset": "0x0",
-    "size": 648416,
-    "sha256": "e14f2a50e3605151cceee243ad85ead705353984b08d3c3acaaff357c4bd5f84"
+    "size": 647664,
+    "sha256": "0b207ba2d2ba11907bb4a3bc58fb6cd2ecc0a8f0db8e847ac50969fded0d720a"
   },
   "parts": [
     {
@@ -27,12 +27,12 @@
     {
       "offset": "0x10000",
       "file": "grok_bot_stopwatch.bin",
-      "size": 582880,
-      "sha256": "e786a2b13706c2dd3bee43aa8c58638d56ca08c5b6046f3633056600bf99e49d"
+      "size": 582128,
+      "sha256": "75b9454633d4e211994c470dd908e79136ba85030b128397b29b8902561ec8a6"
     }
   ],
-  "flashed": false,
-  "hardware_verified": false,
+  "flashed": true,
+  "hardware_verified": true,
   "controls": {
     "left": "next shape (320 ms single-click delay)",
     "left_double": "calibrate neutral IMU pose; hold still briefly",
@@ -51,5 +51,6 @@
       "url": "https://x.ai/bot"
     }
   ],
-  "note": "Merged image replaces the bootloader, partition table and application; intended for this standalone demo."
+  "note": "Merged image replaces the bootloader, partition table and application; intended for this standalone demo.",
+  "hardware_validation": "../docs/validation/hardware-0.3.0.json"
 }

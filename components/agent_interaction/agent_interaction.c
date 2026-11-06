@@ -10,8 +10,8 @@ static const uint32_t colors[] = {0x915bfc,0x1784fc,0x14c370,0xf59410,0xfc2d3e,0
 _Static_assert(sizeof(colors)/sizeof(colors[0]) == EA_INTERACTION_COLORS, "palette size");
 static float clamp(float x, float lo, float hi) { return !isfinite(x) ? lo : fminf(hi, fmaxf(lo, x)); }
 static void rest_pose(ea_interaction_state_t state,float *yaw,float *pitch) {
-    *yaw=state==EA_FACE_THINK?-.30f:.58f;
-    *pitch=state==EA_FACE_THINK?.40f:.28f;
+    *yaw=state==EA_FACE_THINK?-.15f:0;
+    *pitch=state==EA_FACE_THINK?.12f:0;
 }
 #include "interaction_shapes.h"
 #include "interaction_surface_data.h"
@@ -221,6 +221,13 @@ static bool surface_point(unsigned character,const float *radii,float x,float y,
     float dx1=v1.x-v0.x,dy1=v1.y-v0.y,dz1=v1.z-v0.z,dx2=v2.x-v0.x,dy2=v2.y-v0.y,dz2=v2.z-v0.z;
     *normal=(point3_t){dy1*dz2-dz1*dy2,dz1*dx2-dx1*dz2,dx1*dy2-dy1*dx2};return true;
 }
+/* Cone UV: longitude follows circular cross-sections and narrows towards
+   the apex. The final position and visibility still use the actual mesh. */
+static float cone_radius_at(float y) {
+    float at=clamp((y-cone_min_y)*64/(cone_max_y-cone_min_y),0,64);
+    int i=(int)at;if(i>=64)return cone_profile[64];
+    return cone_profile[i]+(cone_profile[i+1]-cone_profile[i])*(at-i);
+}
 static int project_surface_eye(unsigned character,const float *radii,ea_interaction_state_t state,int eye,float blink,
                     float yaw,float pitch,float x[EAI_EYE_CAPACITY],float y[EAI_EYE_CAPACITY]) {
     if(character>=EA_INTERACTION_SHAPES || !x || !y || !isfinite(yaw) || !isfinite(pitch))return 0;
@@ -248,6 +255,7 @@ static int project_surface_eye(unsigned character,const float *radii,ea_interact
         }
         px+=eye?.32f:-.32f;
         float u=face[1]+face[0]*(px*ct-py*st),v=face[2]+face[0]*(px*st+py*ct);
+        if(character==8)u=cone_radius_at(v)*sinf(u/cone_radius_at(face[2]));
         point3_t p={u,v,0},normal={0,0,-1};
         bool valid=surface_point(character,radii,u,v,&p,&normal);
         points[i]=rotate_surface(p,q);facing[i]=valid?rotate_surface(normal,q).z:-1;
@@ -368,19 +376,13 @@ void ea_interaction_render(const ea_interaction_t *u,int size,uint32_t bg,ea_int
         for(int k=0;k<5;k++){float h=size*(.02f+(u->state==EA_FACE_SPEAK||u->state==EA_FACE_LISTEN?.04f:0)+level*(.10f+.07f*cosf(k*1.7f+t*9)));capsule(&p,mid+(k-2)*size*.035f,mid,size*.017f,h,0,color);}
         return;
     }
-    float breath=animated?sinf(t*1.7f)*.012f:0;
-    float roll=-.42f+(animated?sinf(t*.85f)*.055f:0);
-    float sy=1+breath+(u->state==EA_FACE_SPEAK?level*.13f:0),sx=1-breath*.6f;
+    /* Runtime is upright. Keep scale fixed across all expressions and input;
+       turning is a rigid 3D rotation, never a squash/stretch approximation. */
+    const float roll=0,sx=1,sy=1;
     float bob=animated?sinf(t*1.7f)*size*.009f:0;
-    if(u->state==EA_FACE_SPEAK){sy+=.025f+(animated?.02f*sinf(t*4):0);roll+=animated?.018f*sinf(t*3):0;}
-    if(u->state==EA_FACE_LISTEN){roll-=.13f;sy+=.025f;}
-    if(u->state==EA_FACE_THINK){roll+=.16f;}
     if(u->state==EA_FACE_HAPPY||u->state==EA_FACE_DONE){bob-=animated?fabsf(sinf(u->state_time*3))*size*.045f:size*.02f;}
-    if(u->state==EA_FACE_ASK)roll-=.20f;
-    if(u->state==EA_FACE_SLEEP){sy=.88f;sx=1.06f;bob+=size*.025f;}
-    if(u->state==EA_FACE_SURPRISE){sy=1.09f;sx=.94f;}
+    if(u->state==EA_FACE_SLEEP)bob+=size*.025f;
     float hx=animated?u->head_x:0,hy=animated?u->head_y:0;
-    roll+=hx*.16f;sx*=1-.055f*fabsf(hx);sy*=1-.045f*fabsf(hy);
     float ca=cosf(roll),sa=sinf(roll),r=size*.31f,x[N*2],y[N*2];
     float center_x=mid+r*.11f*hx,center_y=mid+bob+r*.08f*hy;
     float yaw,pitch;rest_pose(u->state,&yaw,&pitch);
