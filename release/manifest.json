@@ -52,5 +52,11 @@
     }
   ],
   "note": "Merged image replaces the bootloader, partition table and application; intended for this standalone demo.",
-  "hardware_validation": "../docs/validation/hardware-0.3.0.json"
+  "hardware_validation": "../docs/validation/hardware-0.3.0.json",
+  "publication": {
+    "platform": "M5Burner",
+    "status": "submitted_pending_review",
+    "record": "../docs/publish/m5burner-submission.json",
+    "project_url": "https://github.com/zhuzhe1983/grok-bot-esp32-stopwatch"
+  }
 }

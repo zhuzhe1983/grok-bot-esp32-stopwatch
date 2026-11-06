@@ -6,6 +6,8 @@
 
 源码：[zhuzhe1983/grok-bot-esp32-stopwatch](https://github.com/zhuzhe1983/grok-bot-esp32-stopwatch)。
 
+0.3.0 已提交到 [M5Burner StopWatch](https://burner.m5stack.com/device/stopwatch)，名称 **Grok Bot MultiFace · StopWatch**；2026-11-06 提交后状态为 **待审核**，尚不能视为已公开上架。记录见 `docs/publish/m5burner-submission.json`。
+
 ## 操作
 
 | 输入 | 行为 |

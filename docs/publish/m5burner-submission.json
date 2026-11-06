@@ -8,7 +8,15 @@
   "firmware": "../../release/grok-bot-stopwatch-merged.bin",
   "flash_offset": "0x0",
   "sha256": "0b207ba2d2ba11907bb4a3bc58fb6cd2ecc0a8f0db8e847ac50969fded0d720a",
-  "status": "prepared; publication in progress",
+  "status": "submitted_pending_review",
   "blocking_issue": null,
-  "hardware_status": "0.3.0 flashed to original white TriviaPOD; exact readback and 75-second boot verified. Physical follow direction awaits user observation."
+  "hardware_status": "0.3.0 flashed to original white TriviaPOD; exact readback and 75-second boot verified. Physical follow direction awaits user observation.",
+  "project_url": "https://github.com/zhuzhe1983/grok-bot-esp32-stopwatch",
+  "account": "zhuzhe",
+  "visibility": "public",
+  "submitted_at": "2026-11-06T02:35:23.088214+00:00",
+  "observed_status": "v 0.3.0 待审核",
+  "developer_url": "https://burner.m5stack.com/developer",
+  "credits_verified": true,
+  "cover_sha256": "75aa986174574e6046377597d0176f3837824a05b09032fd46af058874376462"
 }
