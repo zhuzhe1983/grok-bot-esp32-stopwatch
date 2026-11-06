@@ -1,13 +1,14 @@
 {
   "name": "Grok Bot MultiFace · StopWatch",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "device": "stopwatch",
   "target": "https://burner.m5stack.com/device/stopwatch",
   "description": "m5burner-description.md",
   "cover": "../../preview/characters.png",
   "firmware": "../../release/grok-bot-stopwatch-merged.bin",
   "flash_offset": "0x0",
-  "sha256": "77f6f668b4b6f368479c2ddaa162cbca0ec5051636d54ce8969cf080f0d6fea1",
-  "status": "prepared; publication not yet completed",
-  "blocking_issue": "Existing user Chrome cannot be reached: browser access host unavailable; native app selection returns cgWindowNotFound. User asked to reuse their logged-in tab and is AFK. No login credentials requested or copied."
+  "sha256": "e14f2a50e3605151cceee243ad85ead705353984b08d3c3acaaff357c4bd5f84",
+  "status": "prepared; not published; physical follow direction awaits device acceptance",
+  "blocking_issue": "Existing user Chrome cannot be reached: browser access host unavailable; native app selection returns cgWindowNotFound. User asked to reuse their logged-in tab and is AFK. No login credentials requested or copied.",
+  "hardware_status": "Original white TriviaPOD was not connected during 0.2.1 validation; the previous port name now belongs to a different ESP32, so no flash was attempted."
 }

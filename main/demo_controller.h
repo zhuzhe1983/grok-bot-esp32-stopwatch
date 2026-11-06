@@ -11,6 +11,8 @@ typedef struct {
     float touch_x, touch_y; /* Normalized screen coordinates, -1..1. */
     bool acceleration_valid;
     float ax, ay, az; /* Screen-aligned acceleration in g. */
+    bool angular_velocity_valid;
+    float gx, gy, gz; /* Same right-handed axes, degrees/second. */
 } demo_input_t;
 
 typedef struct {
@@ -20,7 +22,9 @@ typedef struct {
     uint32_t calibration_samples;
     float filtered_x, filtered_y, filtered_z;
     float neutral[3],basis_x[3],basis_y[3],sum_x,sum_y,sum_z;
-    uint32_t calibration_started_ms;
+    uint32_t calibration_started_ms,last_gyro_ms,gyro_samples;
+    float orientation[4],gyro_sum[3],gyro_bias[3]; /* w,x,y,z; body -> neutral */
+    bool gyro_seen;
     bool imu_enabled, imu_ready, have_acceleration;
 } demo_controller_t;
 

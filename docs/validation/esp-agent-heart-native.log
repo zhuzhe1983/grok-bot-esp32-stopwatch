@@ -1,0 +1,27 @@
+-- The C compiler identification is AppleClang 21.0.0.21000401
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Configuring done (0.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/esp-agent-heart-tests
+[ 71%] Building C object CMakeFiles/interaction_test.dir/Users/zhuzhe/Workspace/esp-agent/firmware/components/agent_interaction/agent_interaction.c.o
+[ 71%] Building C object CMakeFiles/interaction_eink_test.dir/test_eink.c.o
+[ 71%] Building C object CMakeFiles/interaction_eink_test.dir/Users/zhuzhe/Workspace/esp-agent/firmware/components/agent_interaction/agent_interaction.c.o
+[ 71%] Building C object CMakeFiles/interaction_eink_test.dir/Users/zhuzhe/Workspace/esp-agent/firmware/components/agent_card_ui/agent_card_ui.c.o
+[ 71%] Building C object CMakeFiles/interaction_test.dir/test_interaction.c.o
+[ 85%] Linking C executable interaction_test
+[ 85%] Built target interaction_test
+[100%] Linking C executable interaction_eink_test
+[100%] Built target interaction_eink_test
+Test project /tmp/esp-agent-heart-tests
+    Start 1: interaction
+1/2 Test #1: interaction ......................   Passed    1.76 sec
+    Start 2: interaction_eink
+2/2 Test #2: interaction_eink .................   Passed    0.40 sec
+
+100% tests passed out of 2
+
+Total Test time (real) =   2.16 sec

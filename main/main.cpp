@@ -88,10 +88,14 @@ extern "C" void app_main(void) {
         }
         if (imu) {
             const auto fresh=M5.Imu.update();
+            const auto data=M5.Imu.getImuData();
             if (fresh & m5::IMU_Class::sensor_mask_accel) {
-                const auto data=M5.Imu.getImuData();
                 in.ax=data.accel.x; in.ay=data.accel.y; in.az=data.accel.z;
                 in.acceleration_valid=true;
+            }
+            if (fresh & m5::IMU_Class::sensor_mask_gyro) {
+                in.gx=data.gyro.x;in.gy=data.gyro.y;in.gz=data.gyro.z;
+                in.angular_velocity_valid=true;
             }
         }
         demo_update(&demo,&in);
@@ -124,11 +128,11 @@ extern "C" void app_main(void) {
             next_frame=in.now_ms+kFrameMs;
         }
         if ((int32_t)(in.now_ms-report_at)>=0) {
-            ESP_LOGI(kTag,"shape=%u color=%u expression=%s imu_ready=%u frames_5s=%lu fps=%.1f render_us=%lu flush_us=%lu",
+            ESP_LOGI(kTag,"shape=%u color=%u expression=%s imu_ready=%u gyro=%u frames_5s=%lu fps=%.1f render_us=%lu flush_us=%lu look=(%.2f,%.2f)",
                      demo.face.config.character,demo.face.config.color,
-                     demo_expression_name(demo.face.state),demo.imu_ready,(unsigned long)frames,
+                     demo_expression_name(demo.face.state),demo.imu_ready,demo.gyro_seen,(unsigned long)frames,
                      frames*1000.f/(in.now_ms-report_start),
-                     (unsigned long)(frames?render_us/frames:0),(unsigned long)(frames?flush_us/frames:0));
+                     (unsigned long)(frames?render_us/frames:0),(unsigned long)(frames?flush_us/frames:0),demo.face.input_x,demo.face.input_y);
             frames=0;render_us=flush_us=0;report_start=in.now_ms;report_at=in.now_ms+5000;
         }
         vTaskDelay(pdMS_TO_TICKS(1));

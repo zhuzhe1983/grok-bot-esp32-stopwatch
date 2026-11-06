@@ -116,9 +116,42 @@ static void three_dimensional_neutral(void) {
     for(int i=0;i<400;i++){in.now_ms+=1;demo_update(&d,&in);}
     assert(d.imu_ready); // A fast sensor must not wrap the stable-sample count.
 }
+static void gyro_relative_follow(void) {
+    /* Physical rotations of a flat or upright display. Upright yaw leaves
+       gravity unchanged and therefore exposes the old accel-only blind spot. */
+    for(int upright=0;upright<2;upright++)for(int axis=0;axis<2;axis++)for(int sign=-1;sign<=1;sign+=2) {
+        demo_controller_t d;demo_init(&d,0,42,true);
+        demo_input_t in={.acceleration_valid=true,.angular_velocity_valid=true,
+            .ay=upright?1:0,.az=upright?0:1,.gx=.25f,.gy=-.4f,.gz=.18f};
+        for(int i=0;i<50;i++){in.now_ms+=10;demo_update(&d,&in);}
+        assert(d.imu_ready && d.gyro_seen);
+        assert(fabsf(d.gyro_bias[0]-.25f)<.001f && fabsf(d.gyro_bias[1]+.4f)<.001f);
+        for(int i=1;i<=100;i++) {
+            float a=sign*20.f*i/100*.01745329252f;
+            in.gx=.25f+(axis==0?sign*20.f:0);in.gy=-.4f+(axis==1?sign*20.f:0);
+            if(axis==0){in.ax=0;in.ay=upright?cosf(a):sinf(a);in.az=upright?-sinf(a):cosf(a);}
+            else {in.ax=upright?0:-sinf(a);in.ay=upright?1:0;in.az=upright?0:cosf(a);}
+            in.now_ms+=10;demo_update(&d,&in);
+        }
+        float primary=axis?d.face.input_x:d.face.input_y,other=axis?d.face.input_y:d.face.input_x;
+        assert(primary*(axis?-sign:sign)>.53f && primary*(axis?-sign:sign)<.60f && fabsf(other)<.01f);
+        in.gx=.25f;in.gy=-.4f;
+        for(int i=0;i<300;i++){in.now_ms+=10;demo_update(&d,&in);}
+        assert(fabsf((axis?d.face.input_x:d.face.input_y)-primary)<.02f);
+        in.touching=true;in.touch_x=.2f;in.touch_y=-.3f;in.now_ms+=10;demo_update(&d,&in);
+        assert(d.face.input_x==.2f && d.face.input_y==-.3f);in.touching=false;
+        in.recenter=true;in.now_ms+=10;demo_update(&d,&in);in.recenter=false;
+        for(int i=0;i<50;i++){in.now_ms+=10;demo_update(&d,&in);}
+        assert(d.imu_ready && fabsf(d.face.input_x)<.01f && fabsf(d.face.input_y)<.01f);
+    }
+    demo_controller_t d;demo_init(&d,0,42,true);
+    demo_input_t in={.acceleration_valid=true,.angular_velocity_valid=true,.ay=1,.gy=20};
+    for(int i=0;i<100;i++){in.now_ms+=10;demo_update(&d,&in);}
+    assert(!d.imu_ready); // Rotation around gravity is not a stable neutral pose.
+}
 int main(void) {
     buttons_and_bag(); tilt_touch_and_dropout(); millis_wrap();
-    click_gestures();three_dimensional_neutral();
-    puts("controller: buttons, full random cycles, touch priority, filtered tilt, recenter, IMU dropout, timer wrap passed");
+    click_gestures();three_dimensional_neutral();gyro_relative_follow();
+    puts("controller: buttons, full random cycles, touch priority, filtered tilt, 6-axis relative rotation, gyro bias, recenter, IMU dropout, timer wrap passed");
     return 0;
 }

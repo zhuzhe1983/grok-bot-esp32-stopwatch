@@ -60,7 +60,14 @@ def circles(items, angle):
     return max(hits)
 
 
-heart = bezier((0, -.62), [((.38, -1.16), (1.02, -.91), (.98, -.24)), ((.96, .27), (.35, .78), (0, .99)), ((-.35, .78), (-.96, .27), (-.98, -.24)), ((-1.02, -.91), (-.38, -1.16), (0, -.62))])
+# Keep the lobes, but join the lower curves with a horizontal tangent.
+# The old opposing diagonal tangents met in a sharp tip at y=.99.
+heart = bezier((0, -.62), [
+    ((.38, -1.16), (1.02, -.91), (.98, -.24)),
+    ((.96, .27), (.32, .90), (0, .90)),
+    ((-.32, .90), (-.96, .27), (-.98, -.24)),
+    ((-1.02, -.91), (-.38, -1.16), (0, -.62)),
+])
 # Round belly and broad, rounded crown, calibrated against the supplied avatar.
 # The previous pear-shaped curve pinched the shoulders and flattened the belly.
 drop = bezier((0, -1.38), [((.28, -1.38), (.47, -1.04), (.80, -.60)), ((.93, -.43), (1, -.22), (1, 0)), ((1, .5523), (.5523, 1), (0, 1)), ((-.5523, 1), (-1, .5523), (-1, 0)), ((-1, -.22), (-.93, -.43), (-.80, -.60)), ((-.47, -1.04), (-.28, -1.38), (0, -1.38))])

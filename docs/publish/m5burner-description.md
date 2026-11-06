@@ -10,11 +10,11 @@ A standalone, offline animated-face demo for M5Stack StopWatch: 13 face shapes, 
 - Hold A+B for one second: alternative IMU calibration.
 - Touch / drag: look toward your finger; touch takes priority over tilt.
 
-## Version 0.2.0
+## Version 0.2.1
 
 Full 466×466 rendering with visible-silhouette rasterization, a compact internal-RAM coverage buffer and partial display updates. The default teardrop face measured about 28–30 FPS after the initial hint disappeared on a white TriviaPOD TP-01-A (32 MB Flash / 8 MB PSRAM). Hints temporarily reduce the frame rate. StopWatch C152 has been tested in ESP Online Tester with the actual firmware; a C152 physical unit was not available in this round.
 
-The IMU now uses a relative 3D gravity reference, with stable-sample calibration and a center deadband. It measures tilt relative to gravity, not yaw around gravity. Physical axis direction and the new double-click feel await user acceptance.
+Version 0.2.1 rounds and slightly shortens the heart tip. The IMU now combines gyroscope rotation with gravity correction, including left/right turns while the display is upright. Double-click A recalibrates the neutral pose and gyro bias. Heading is relative, so slow long-term drift may require recentering. Version 0.2.1 has passed native and actual-firmware simulator checks; physical axis direction and following behavior await hardware acceptance. The FPS result above was measured with version 0.2.0.
 
 This is a silent visual demo: speaking/listening are animation states only. No microphone, speaker, TTS or network is enabled. Face/color choices reset on reboot. Brightness defaults to 100/255.
 

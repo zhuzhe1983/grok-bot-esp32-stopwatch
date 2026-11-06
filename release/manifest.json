@@ -1,6 +1,6 @@
 {
   "project": "grok-bot-esp32",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "board": "M5Stack StopWatch C152",
   "chip": "esp32s3",
   "flash_size": 16777216,
@@ -8,8 +8,8 @@
   "merged_image": {
     "file": "grok-bot-stopwatch-merged.bin",
     "offset": "0x0",
-    "size": 646944,
-    "sha256": "77f6f668b4b6f368479c2ddaa162cbca0ec5051636d54ce8969cf080f0d6fea1"
+    "size": 648416,
+    "sha256": "e14f2a50e3605151cceee243ad85ead705353984b08d3c3acaaff357c4bd5f84"
   },
   "parts": [
     {
@@ -27,12 +27,12 @@
     {
       "offset": "0x10000",
       "file": "grok_bot_stopwatch.bin",
-      "size": 581408,
-      "sha256": "604517399c8f2058b4f0e3e640098cc46b1ffb4a3170b74fdf03b4464ab82350"
+      "size": 582880,
+      "sha256": "e786a2b13706c2dd3bee43aa8c58638d56ca08c5b6046f3633056600bf99e49d"
     }
   ],
-  "flashed": true,
-  "hardware_verified": true,
+  "flashed": false,
+  "hardware_verified": false,
   "controls": {
     "left": "next shape (320 ms single-click delay)",
     "left_double": "calibrate neutral IMU pose; hold still briefly",
@@ -51,18 +51,5 @@
       "url": "https://x.ai/bot"
     }
   ],
-  "note": "Merged image replaces the bootloader, partition table and application; intended for this standalone demo.",
-  "hardware_verification": {
-    "model": "white TriviaPOD TP-01-A (user identified)",
-    "scope": "flash byte readback, boot, live IMU calibration, 75-second serial performance observation",
-    "record": "../docs/validation/hardware-0.2.0.json",
-    "limitations": [
-      "new firmware visual acceptance by user",
-      "physical tilt direction",
-      "physical double-click feel",
-      "StopWatch C152 physical hardware",
-      "other shapes physical FPS",
-      "power consumption"
-    ]
-  }
+  "note": "Merged image replaces the bootloader, partition table and application; intended for this standalone demo."
 }

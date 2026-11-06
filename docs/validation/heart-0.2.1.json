@@ -1,0 +1,26 @@
+{
+  "version": "0.2.1",
+  "changed_shape": 5,
+  "name": "heart",
+  "lower_tip": "Smooth horizontal tangent at (0, 0.90), replacing a sharp join at (0, 0.99).",
+  "changed_tables": [
+    "shape_radii[5]",
+    "surface_depths[5]"
+  ],
+  "unchanged": "All other 12 shapes, eye anchors, colors and animation stretch parameters.",
+  "synced_to": [
+    "esp-agent/firmware/components/agent_interaction",
+    "esp-agent/src/esp_agent/web/interaction.js",
+    "grok-bot-esp32/components/agent_interaction"
+  ],
+  "visual_review": "preview/heart-rounded-comparison.png",
+  "tests": {
+    "esp_agent_native": 2,
+    "standalone_native": 3,
+    "differential_raster_frames": 1248,
+    "differing_pixels": 0
+  },
+  "firmware_build": "ESP32-S3 complete image passed; ESP-Agent renderer components compiled and tested natively; no full P4 rebuild claimed",
+  "flashed": false,
+  "reason": "Original TriviaPOD not present on USB."
+}
